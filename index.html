@@ -193,13 +193,13 @@ const chip=s=>`<span class="chip ${s}">${STATUS[s]}</span>`;
 
 /* ---------- data ---------- */
 const KEY='rish-o-ghaichi:v1';
-const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],pin:'1234',phone:'',address:''},
+const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],phone:'',address:''},
  services:[{id:'s1',name:'کوتاهی مو',min:30,price:0},{id:'s2',name:'اصلاح ریش',min:30,price:0},{id:'s3',name:'کوتاهی مو و ریش',min:60,price:0},{id:'s4',name:'اصلاح صورت',min:30,price:0}],
  bookings:[],lastPhone:''});
-let db;
-try{db=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-db=Object.assign(DEF(),db||{});db.settings=Object.assign(DEF().settings,db.settings);
-const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
+let db=DEF();
+window.BUSY={};
+try{db.lastPhone=localStorage.getItem(KEY+':phone')||''}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY+':phone',db.lastPhone||'')}catch(e){}if(window.FB&&FB.push)FB.push()};
 const active=b=>b.status==='pending'||b.status==='confirmed'||b.status==='proposed';
 const isPast=b=>{const n=new Date(),t=today();if(b.date<t)return true;if(b.date>t)return false;return n.getHours()*60+n.getMinutes()>=toMin(b.time)+b.n*db.settings.slot};
 const nSlots=min=>Math.max(1,Math.ceil(min/db.settings.slot));
@@ -214,6 +214,7 @@ function blockMap(date){
 function occupied(date){
  const set=new Set(),sl=db.settings.slot;
  for(const t in blockMap(date))set.add(+t);
+ for(const t of (window.BUSY[date]||[]))set.add(t);
  for(const b of db.bookings){if(b.date!==date||!active(b))continue;const t=toMin(b.time);for(let i=0;i<b.n;i++)set.add(t+i*sl)}
  return set;
 }
@@ -261,8 +262,9 @@ function showMsg(id,kind,admin){
 
 /* ---------- routing ---------- */
 const isAdminRoute=()=>location.hash.startsWith('#/admin');
-const isAuthed=()=>sessionStorage.getItem('adm')==='1';
+const isAuthed=()=>!!(window.FB&&FB.isAdmin);
 function render(scrollTo){
+ if(!(window.FB&&FB.loaded)){$app.innerHTML='<div class="wrap"><main><p class="empty">در حال بارگذاری…</p></main></div>';return}
  if(isAdminRoute())renderAdmin();else renderPub();
  if(scrollTo){const el=document.getElementById(scrollTo);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
 }
@@ -345,7 +347,7 @@ function submitBooking(){
 let A={tab:'req',date:today(),stripStart:today()};
 function renderAdmin(){
  if(!isAuthed()){
-  $app.innerHTML=head('ورود مدیر')+`<div class="wrap"><main><section><h2>رمز ورود را وارد کنید</h2><form id="login"><label class="field"><span>رمز</span><input id="pin" type="password" inputmode="numeric" autocomplete="current-password"></label><button class="btn primary block" type="submit">ورود</button></form><div class="foot"><a href="#/">بازگشت به صفحه رزرو</a></div></section></main></div>`;
+  $app.innerHTML=head('ورود مدیر')+`<div class="wrap"><main><section><h2>ورود مدیر</h2><form id="login"><label class="field"><span>ایمیل</span><input id="em" type="email" autocomplete="username" dir="ltr"></label><label class="field"><span>رمز</span><input id="pin" type="password" autocomplete="current-password" dir="ltr"></label><button class="btn primary block" type="submit">ورود</button></form><div class="foot"><a href="#/">بازگشت به صفحه رزرو</a></div></section></main></div>`;
   return;
  }
  const pend=db.bookings.filter(b=>b.status==='pending').length;
@@ -406,9 +408,7 @@ function setView(){
  <div class="setgrp"><h2>اطلاعات تماس (نمایش در صفحه مشتری)</h2>
  <label class="field"><span>تلفن</span><input type="tel" data-set="phone" value="${esc(s.phone)}"></label>
  <label class="field"><span>آدرس</span><input data-set="address" value="${esc(s.address)}"></label></div>
- <div class="setgrp"><h2>رمز مدیر</h2>${s.pin==='1234'?`<div class="warn">رمز فعلی همان رمز پیش‌فرض ۱۲۳۴ است. آن را تغییر دهید.</div>`:''}
- <label class="field" style="margin-top:12px"><span>رمز جدید (۴ تا ۸ رقم)</span><input id="newpin" type="password" inputmode="numeric"></label><button class="btn block" data-act="setpin">ذخیره رمز</button></div>
- <div class="setgrp"><h2>پشتیبان‌گیری</h2><p class="hint">اطلاعات این برنامه فقط روی همین دستگاه ذخیره می‌شود.</p>
+ <div class="setgrp"><h2>پشتیبان‌گیری</h2><p class="hint">اطلاعات روی Firebase ذخیره می‌شود؛ این بخش فقط نسخهٔ پشتیبان اضافه است.</p>${localStorage.getItem(KEY)?'<button class="btn block" data-act="migrate" style="margin-bottom:8px">انتقال اطلاعات قبلیِ این دستگاه به Firebase</button>':''}
  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="export">دانلود پشتیبان</button><label class="btn" style="cursor:pointer">بازیابی از فایل<input type="file" id="imp" accept="application/json" hidden></label></div></div>`;
 }
 
@@ -476,7 +476,7 @@ document.addEventListener('click',e=>{
   case'lookup':{const v=en(document.getElementById('f-look').value).replace(/[\s-]/g,'');P.lookInput=v;if(!/^09\d{9}$/.test(v))return toast('شماره موبایل معتبر وارد کنید.');P.lookup=v;db.lastPhone=v;save();render()}break;
   case'mycancel':if(confirm('این نوبت لغو شود؟'))setStatus('cancelled','نوبت لغو شد.');break;
   /* admin */
-  case'logout':sessionStorage.removeItem('adm');location.hash='#/';render();break;
+  case'logout':FB.logout();location.hash='#/';break;
   case'atab':A.tab=el.dataset.tab;render();window.scrollTo(0,0);break;
   case'approve':{const b=db.bookings.find(x=>x.id===id);if(b){b.status='confirmed';save();closeDlg();render();toast('نوبت تأیید شد.');showMsg(id,'confirmed',true)}}break;
   case'reject':showReject(id);break;
@@ -522,14 +522,13 @@ document.addEventListener('click',e=>{
    db.bookings.push({id:uid(),date:A.date,time:fromMin(t),sid:svc.id,sname:svc.name,n,name,phone,note:'',code:newCode(),status:'confirmed',created:Date.now()});save();closeDlg();render();toast('نوبت ثبت شد.')}break;
   case'addsvc':db.services.push({id:uid(),name:'خدمت جدید',min:30,price:0});save();render();break;
   case'delsvc':if(db.services.length<2)return toast('حداقل یک خدمت باید بماند.');if(confirm('این خدمت حذف شود؟ نوبت‌های قبلی تغییر نمی‌کنند.')){db.services=db.services.filter(x=>x.id!==id);save();render()}break;
-  case'setpin':{const v=en(document.getElementById('newpin').value).trim();if(!/^\d{4,8}$/.test(v))return toast('رمز باید ۴ تا ۸ رقم باشد.');db.settings.pin=v;save();render();toast('رمز تغییر کرد.')}break;
+  case'migrate':{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(!d||!confirm('اطلاعات قبلی این دستگاه به Firebase منتقل شود؟'))break;db.settings=Object.assign(DEF().settings,d.settings);delete db.settings.pin;if(Array.isArray(d.services))db.services=d.services;db.bookings=Array.isArray(d.bookings)?d.bookings:[];save();localStorage.removeItem(KEY);render();toast('منتقل شد.')}break;
   case'export':{const blob=new Blob([JSON.stringify(db,null,1)],{type:'application/json'}),u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download=`rish-o-ghaichi-${today()}.json`;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}break;
  }
 });
 document.addEventListener('submit',e=>{
  if(e.target.id!=='login')return;e.preventDefault();
- if(en(document.getElementById('pin').value).trim()===db.settings.pin){sessionStorage.setItem('adm','1');render()}
- else{toast('رمز اشتباه است.');document.getElementById('pin').select()}
+ FB.login(document.getElementById('em').value.trim(),document.getElementById('pin').value).catch(()=>toast('ایمیل یا رمز اشتباه است.'));
 });
 document.addEventListener('input',e=>{
  const id=e.target.id;
@@ -553,15 +552,17 @@ document.addEventListener('change',e=>{
   save();toast('ذخیره شد.');
  }else if(t.id==='imp'&&t.files[0]){
   const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.settings||!Array.isArray(d.services)||!Array.isArray(d.bookings))throw 0;
-   if(!confirm('اطلاعات فعلی با فایل جایگزین شود؟'))return;db=Object.assign(DEF(),d);db.settings=Object.assign(DEF().settings,d.settings);save();render();toast('بازیابی شد.')}catch(err){toast('فایل پشتیبان معتبر نیست.')}};
+   if(!confirm('اطلاعات فعلی با فایل جایگزین شود؟'))return;db=Object.assign(DEF(),d);db.settings=Object.assign(DEF().settings,d.settings);delete db.settings.pin;save();render();toast('بازیابی شد.')}catch(err){toast('فایل پشتیبان معتبر نیست.')}};
   r.readAsText(t.files[0]);
  }
 });
 
 /* ---------- start ---------- */
 render();
+setTimeout(()=>{if(!(window.FB&&FB.loaded))$app.innerHTML='<div class="wrap"><main><p class="empty">اتصال به سرور برقرار نشد. اینترنت را بررسی کنید و دوباره باز کنید.</p></main></div>'},10000);
 setInterval(()=>{if(isAdminRoute()&&isAuthed()&&A.tab==='cal'&&!$dlg.open&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){const y=scrollY;render();scrollTo(0,y)}},30000);
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
+<script type="module" src="sync.js"></script>
 </body>
 </html>
