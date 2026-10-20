@@ -1,5 +1,5 @@
-const CACHE = 'rish-o-ghaichi-v6';
-const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'firebase-config.js'];
+const CACHE = 'rish-o-ghaichi-v5';
+const SHELL = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'sync.js', 'firebase-config.js'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
