@@ -139,7 +139,7 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}:f
 .wrap{max-width:600px;margin:0 auto;padding:0 18px}
 .top{position:relative;overflow:hidden;background:linear-gradient(145deg,#111827,#17243b 65%,#203858);color:#fff;padding:28px 0 26px;box-shadow:0 8px 28px rgba(15,23,42,.14)}
 .top:before,.top:after{content:"";position:absolute;border-radius:50%;pointer-events:none}.top:before{width:180px;height:180px;background:rgba(255,255,255,.045);left:-70px;top:-95px}.top:after{width:220px;height:220px;background:rgba(59,130,246,.08);right:-100px;bottom:-150px}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative;z-index:1}.brand h1{margin:0;font-size:2rem;font-weight:900;line-height:1.2;letter-spacing:-.03em}.brand p{margin:5px 0 0;color:#b8c4d6;font-size:.9rem}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative;z-index:1}.brand h1{margin:0;font-size:2rem;font-weight:900;line-height:1.2;letter-spacing:-.03em;display:flex;align-items:center;gap:10px}.brand h1:before{content:"";display:inline-block;width:15px;height:31px;flex:none;border-radius:9px;background:repeating-linear-gradient(135deg,#fff 0 6px,#2f5d9e 6px 12px,#fff 12px 18px,#c23b2e 18px 24px);border:2px solid rgba(255,255,255,.8);box-shadow:0 3px 12px rgba(0,0,0,.18)}.brand p{margin:5px 0 0;color:#b8c4d6;font-size:.9rem}
 .top .exit{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:12px;padding:7px 14px;min-height:42px;backdrop-filter:blur(8px)}
 .pole{height:7px;background:repeating-linear-gradient(-45deg,var(--red) 0 13px,#fff 13px 26px,var(--blue) 26px 39px,#fff 39px 52px)}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#e9edf4;border:1px solid #dde3ec;border-radius:15px;padding:5px;margin:18px 0 4px}.seg button{background:transparent;border:0;border-radius:11px;padding:10px 8px;font-weight:700;color:var(--steel);min-height:46px;transition:.18s}.seg button[aria-selected=true]{color:var(--ink);background:#fff;box-shadow:0 3px 12px rgba(15,23,42,.08);font-weight:900}
@@ -159,6 +159,14 @@ dialog{border:0;border-radius:20px;padding:20px;width:min(92vw,440px);color:var(
 .top a.exit{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap;font-weight:700}
 .bk.past,.cont.past{border-color:#9aa3b1;background:#e9ecf1}.bk.past b,.bk.past span{color:#8b95a5}.bk.past{opacity:.85}.chip.past{color:#6b7587;border-color:#c3cad5;background:#f3f5f8}
 @media(max-width:380px){.svc{grid-template-columns:1fr 1fr}.svc .nm{grid-column:1/-1}.brand h1{font-size:1.8rem}}@media(prefers-reduced-motion:reduce){*,html{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Final polish: barber-shop identity, calmer surfaces and responsive admin controls */
+:root{--ink:#15233b;--red:#c23b2e;--blue:#2f5d9e;--paper:#f4f6fa;--line:#e1e6ee;--steel:#65758c;--ok:#187653}
+.top{background:linear-gradient(125deg,#101a2c 0%,#15233b 58%,#203b60 100%)}
+.pole{height:6px;background:repeating-linear-gradient(-45deg,#2f5d9e 0 13px,#fff 13px 26px,#c23b2e 26px 39px,#fff 39px 52px)}
+.svc input:focus,.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#7194c8;box-shadow:0 0 0 3px rgba(47,93,158,.12)}
+@media(min-width:700px){.wrap{max-width:680px}.top{padding:30px 0 27px}.brand h1{font-size:2.15rem}}
 
 </style>
 </head>
