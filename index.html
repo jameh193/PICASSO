@@ -347,7 +347,7 @@ function submitBooking(){
 let A={tab:'req',date:today(),stripStart:today()};
 function renderAdmin(){
  if(!isAuthed()){
-  $app.innerHTML=head('ورود مدیر')+`<div class="wrap"><main><section><h2>ورود مدیر</h2><form id="login"><label class="field"><span>ایمیل</span><input id="em" type="email" autocomplete="username" dir="ltr"></label><label class="field"><span>رمز</span><input id="pin" type="password" autocomplete="current-password" dir="ltr"></label><button class="btn primary block" type="submit">ورود</button></form><div class="foot"><a href="#/">بازگشت به صفحه رزرو</a></div></section></main></div>`;
+  $app.innerHTML=head('ورود مدیر')+`<div class="wrap"><main><section><h2>ورود مدیر</h2><form id="login"><label class="field"><span>نام کاربری</span><input id="em" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" dir="ltr"></label><label class="field"><span>رمز</span><input id="pin" type="password" autocomplete="current-password" dir="ltr"></label><button class="btn primary block" type="submit">ورود</button><button class="btn block" type="button" data-act="glogin" style="margin-top:8px">ورود با Google</button></form><div class="foot"><a href="#/">بازگشت به صفحه رزرو</a></div></section></main></div>`;
   return;
  }
  const pend=db.bookings.filter(b=>b.status==='pending').length;
@@ -476,6 +476,7 @@ document.addEventListener('click',e=>{
   case'lookup':{const v=en(document.getElementById('f-look').value).replace(/[\s-]/g,'');P.lookInput=v;if(!/^09\d{9}$/.test(v))return toast('شماره موبایل معتبر وارد کنید.');P.lookup=v;db.lastPhone=v;save();render()}break;
   case'mycancel':if(confirm('این نوبت لغو شود؟'))setStatus('cancelled','نوبت لغو شد.');break;
   /* admin */
+  case'glogin':FB.google().catch(e=>{if(e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')toast('ورود با Google انجام نشد.')});break;
   case'logout':FB.logout();location.hash='#/';break;
   case'atab':A.tab=el.dataset.tab;render();window.scrollTo(0,0);break;
   case'approve':{const b=db.bookings.find(x=>x.id===id);if(b){b.status='confirmed';save();closeDlg();render();toast('نوبت تأیید شد.');showMsg(id,'confirmed',true)}}break;
@@ -528,7 +529,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('submit',e=>{
  if(e.target.id!=='login')return;e.preventDefault();
- FB.login(document.getElementById('em').value.trim(),document.getElementById('pin').value).catch(()=>toast('ایمیل یا رمز اشتباه است.'));
+ FB.login(document.getElementById('em').value.trim(),document.getElementById('pin').value).catch(()=>toast('نام کاربری یا رمز اشتباه است.'));
 });
 document.addEventListener('input',e=>{
  const id=e.target.id;

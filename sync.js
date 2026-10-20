@@ -1,6 +1,6 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import {initializeFirestore,persistentLocalCache,persistentMultipleTabManager,doc,getDoc,collection,query,where,onSnapshot,writeBatch} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-import {getAuth,onAuthStateChanged,signInAnonymously,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {getAuth,onAuthStateChanged,signInAnonymously,signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {firebaseConfig} from './firebase-config.js';
 
 const app=initializeApp(firebaseConfig);
@@ -74,5 +74,7 @@ onAuthStateChanged(auth,async u=>{
   shadow.clear();R.bookings=new Map();
   subscribe();render();
 });
-FB.login=(email,pw)=>signInWithEmailAndPassword(auth,email,pw);
+// نام کاربری ساده به یک ایمیل داخلی تبدیل می‌شود (Firebase فقط ایمیل می‌پذیرد)
+FB.login=(user,pw)=>signInWithEmailAndPassword(auth,user.includes('@')?user:user.trim().toLowerCase()+'@barber.local',pw);
+FB.google=()=>signInWithPopup(auth,new GoogleAuthProvider());
 FB.logout=()=>signOut(auth);
