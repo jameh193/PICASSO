@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#15233B">
+<meta name="theme-color" content="#0a0a0b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
@@ -162,6 +162,75 @@ input[dir=ltr]{text-align:left}
 @media(max-width:380px){.svc{grid-template-columns:1fr 1fr}.svc .nm{grid-column:1/-1}.brand h1{font-size:1.8rem}}@media(prefers-reduced-motion:reduce){*,html{scroll-behavior:auto!important;transition:none!important}}
 
 </style>
+<style>
+/* ===== تم مشکی و طلایی ===== */
+:root{color-scheme:dark;--ink:#f4efe3;--paper:#0a0a0b;--card:#151517;--card2:#1d1d20;--line:#2b2b30;--steel:#9d998e;--gold:#d4af37;--gold2:#f0d27a;--goldg:linear-gradient(135deg,#f3d982,#d4af37 55%,#b8902a);--red:#e5604f;--blue:#d4af37;--ok:#3fb68b;--white:#151517;--shadow:0 8px 24px rgba(0,0,0,.45);--shadow-lg:0 18px 50px rgba(0,0,0,.75)}
+body{background:radial-gradient(circle at 100% 0%,rgba(212,175,55,.09),transparent 32%),radial-gradient(circle at 0% 30%,rgba(212,175,55,.05),transparent 30%),#0a0a0b;color:var(--ink)}
+a{color:var(--gold2)}
+:focus-visible{outline:3px solid rgba(212,175,55,.5)}
+.pole{display:none}
+.top{background:linear-gradient(145deg,#000,#111113 70%,#1a1609);border-bottom:1px solid rgba(212,175,55,.4);box-shadow:0 8px 28px rgba(0,0,0,.6)}
+.top:before{background:rgba(212,175,55,.05)}.top:after{background:rgba(212,175,55,.07)}
+.brand h1{background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.brand p{color:#b6af9b}
+.top .exit{background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.5);color:var(--gold2)}
+.seg{background:var(--card);border-color:var(--line)}
+.seg button{color:var(--steel)}
+.seg button[aria-selected=true]{background:var(--goldg);color:#14110a;box-shadow:0 6px 16px rgba(212,175,55,.25)}
+h2 .n{background:var(--goldg);color:#14110a;box-shadow:0 5px 12px rgba(212,175,55,.25)}
+.row,.day,.time,.item,.summary,.tl,.rcpt,.svc,.days7 label{background:var(--card);border-color:var(--line);color:var(--ink);box-shadow:var(--shadow)}
+.row .m,.day .w,.day .mo,.item p,.hint,.empty,.foot,.foot a{color:var(--steel)}
+.row.on,.day.on{background:var(--card2);border-color:var(--gold);color:var(--ink);box-shadow:0 0 0 1px var(--gold),0 10px 24px rgba(0,0,0,.55)}
+.row.on .m{color:var(--gold2)}.day.on .w,.day.on .mo{color:#cfc7ad}
+.day .s{color:var(--gold2)}
+.day:disabled{background:#101011;border-color:#1d1d20;color:#58554d;box-shadow:none}.day:disabled .w,.day:disabled .s,.day:disabled .mo{color:#58554d}
+.day.vip{background:linear-gradient(160deg,#2c2411,#171309);border-color:var(--gold)}
+.day.vip .w,.day.vip .mo{color:#dcc382}.day.vip .s,.day.vip .cnt{color:var(--gold2)}
+.day.vip.on{background:var(--goldg);border-color:var(--gold2);color:#17120a}
+.day.vip.on .w,.day.vip.on .mo,.day.vip.on .s,.day.vip.on .cnt{color:#3a2d08}
+.day.vip:disabled{background:#14120b;border-color:#3a3217;color:#6b6244}
+.strip .day .cnt{color:var(--gold2)}.strip .day.on .cnt{color:var(--gold2)}
+.time.on{background:var(--goldg);color:#14110a;border-color:var(--gold2);box-shadow:0 8px 18px rgba(212,175,55,.25)}
+.row .m .vp{display:block;font-style:normal;font-weight:800;color:var(--gold2)}
+.field input,.field select,.field textarea,.svc input{background:#0e0e10;border-color:#35353b;color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus,.svc input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,175,55,.14)}
+input::placeholder,textarea::placeholder{color:#6d695f}
+.btn{background:var(--card2);border-color:rgba(212,175,55,.5);color:var(--gold2);box-shadow:none}
+.btn.primary,.btn.ok{background:var(--goldg);border-color:var(--gold2);color:#14110a;box-shadow:0 9px 22px rgba(212,175,55,.25)}
+.btn.danger{background:#1d1211;border-color:#6b2a24;color:#ff8a7a}
+.summary{border-inline-start-color:var(--gold);background:linear-gradient(135deg,#1a1710,#151517)}
+.chip{background:transparent}
+.chip.pending{color:#d8d3c4;border-color:#55524a;background:#1c1c1f}
+.chip.confirmed{color:#5fd1a6;border-color:#245c47;background:#0f2019}
+.chip.rejected,.chip.cancelled,.chip.declined{color:#ff8a7a;border-color:#6b2a24;background:#1d1211}
+.chip.proposed{color:var(--gold2);border-color:#6b5817;background:#221c0b}
+.chip.past{color:#8a867c;border-color:#3a3a3f;background:#1a1a1c}
+.chip.vip{color:#14110a;background:var(--goldg);border-color:var(--gold2);font-weight:900}
+.nav{background:rgba(16,16,18,.95);border-color:rgba(212,175,55,.35);box-shadow:0 12px 35px rgba(0,0,0,.7)}
+.nav button{color:var(--steel)}
+.nav button[aria-selected=true]{background:var(--goldg);color:#14110a}
+.nav .bd{background:var(--gold);color:#14110a}.nav button[aria-selected=true] .bd{background:#14110a;color:var(--gold2)}
+.tl{border-color:var(--line)}.slot{border-bottom-color:#232327}.slot .tm{color:var(--steel)}
+.free{color:#625e55}.free:hover{background:#1c1c1f}
+.bk,.cont{border-color:#8a867c;background:#1e1e22;color:var(--ink)}
+.bk.confirmed,.cont.confirmed{border-color:var(--ok);background:#0f221b}
+.bk.proposed,.cont.proposed{border-color:var(--gold);background:#221c0b}
+.bk.past,.cont.past{border-color:#4a4a50;background:#18181b}.bk.past b,.bk.past span{color:#77736a}
+.bk span{color:var(--steel)}
+.blk{background:repeating-linear-gradient(-45deg,#141416 0 8px,#1a1a1d 8px 16px);color:#8a867c}.blk small{color:#6d695f}
+.tl.vip{border-color:var(--gold);background:linear-gradient(180deg,#1b1608,#141416 35%);box-shadow:0 0 0 1px rgba(212,175,55,.45),0 10px 30px rgba(212,175,55,.08)}
+.vipbar{margin:10px 0;padding:9px 13px;border:1px solid var(--gold);border-radius:13px;background:linear-gradient(135deg,#2c2411,#171309);color:var(--gold2);font-weight:800}
+.rcpt{border-color:#3b3b41}
+.days7 input{accent-color:var(--gold)}
+.svc .x{background:#1d1211;border-color:#6b2a24;color:#ff8a7a}
+.warn{background:#1d1211;border-color:#6b2a24}
+.setgrp,.foot{border-color:var(--line)}
+dialog{background:#141416;color:var(--ink);border:1px solid rgba(212,175,55,.4)}
+dialog::backdrop{background:rgba(0,0,0,.78)}
+#toast{background:#1c1c1f;color:var(--gold2);border:1px solid rgba(212,175,55,.45)}
+@media(min-width:381px){.svc{grid-template-columns:1fr 78px 104px 104px 44px}}
+
+</style>
 </head>
 <body>
 <div id="app"></div>
@@ -192,10 +261,27 @@ const STATUS={pending:'در انتظار تأیید',confirmed:'تأیید شد�
 const chip=s=>`<span class="chip ${s}">${STATUS[s]}</span>`;
 
 /* ---------- data ---------- */
-const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],phone:'',address:''},
+const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],vipDates:[],phone:'',address:''},
  services:[{id:'s1',name:'کوتاهی مو',min:30,price:0},{id:'s2',name:'اصلاح ریش',min:30,price:0},{id:'s3',name:'کوتاهی مو و ریش',min:60,price:0},{id:'s4',name:'اصلاح صورت',min:30,price:0}],
  bookings:[],cells:[]});
 let db=DEF();
+/* ---------- VIP helpers ---------- */
+const isVip=d=>Array.isArray(db.settings.vipDates)&&db.settings.vipDates.includes(d);
+const svcPrice=(x,d)=>(isVip(d)&&x&&x.vipPrice>0)?x.vipPrice:((x&&x.price)||0);
+const bookingVip=b=>b.vip!=null?!!b.vip:isVip(b.date);
+const bookingPrice=b=>b.price!=null?b.price:svcPrice(db.services.find(x=>x.id===b.sid),b.date);
+const vipChip=b=>bookingVip(b)?'<span class="chip vip">VIP</span>':'';
+const priceP=b=>bookingPrice(b)?`<p>هزینه: ${price(bookingPrice(b))}</p>`:'';
+function svcPriceHtml(x){
+ if(P.date&&isVip(P.date))return `<em class="vp">${price(svcPrice(x,P.date))||'نرخ VIP'}</em>`;
+ if(P.date)return price(x.price);
+ return price(x.price)+((x.vipPrice>0&&x.vipPrice!==x.price)?`<em class="vp">VIP: ${price(x.vipPrice)}</em>`:'');
+}
+function vipSection(){
+ const list=(db.settings.vipDates||[]).filter(d=>d>=today()).sort();
+ return `<div class="setgrp"><h2>روزهای VIP</h2><p class="hint">برای VIP کردن یک روز، در تب «تقویم» همان روز را باز کنید و دکمه «VIP کردن این روز» را بزنید. در روزهای VIP، قیمت VIP خدمات اعمال می‌شود.</p>`+
+ (list.length?list.map(d=>`<div class="item" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>${fFull.format(parse(d))}</b><span style="display:flex;gap:6px"><button class="btn sm" data-act="goday" data-d="${d}">دیدن</button><button class="btn sm danger" data-act="unvip" data-d="${d}">برداشتن</button></span></div>`).join(''):`<p class="empty">هنوز روز VIP تعریف نشده.</p>`)+`</div>`;
+}
 const LPK='rish-o-ghaichi:phone';
 const getLP=()=>{try{return localStorage.getItem(LPK)||''}catch(e){return ''}};
 const setLP=v=>{try{localStorage.setItem(LPK,v)}catch(e){}};
@@ -221,6 +307,7 @@ async function loadAll(){
  const err=c.error||k.error||b.error;if(err)throw err;
  if(c.data){
   db.settings=Object.assign(DEF().settings,c.data.settings||{});delete db.settings.pin;
+  if(!Array.isArray(db.settings.vipDates))db.settings.vipDates=[];
   if(Array.isArray(c.data.services)&&c.data.services.length)db.services=c.data.services;
  }else if(admin)saveCfg();
  db.cells=k.data||[];db.bookings=b.data||[];
@@ -322,6 +409,7 @@ function receiptText(b,kind){
  const title={pending:'رسید ثبت درخواست نوبت',confirmed:'تأیید نوبت',rejected:'رد درخواست نوبت',proposed:'پیشنهاد زمان جدید',cancelled:'لغو نوبت',declined:'پیشنهاد زمان جدید پذیرفته نشد'}[k]||'رسید نوبت';
  let t=`ریش و قیچی | آرایشگاه پیکاسو\n${title}\nکد پیگیری: ${fa(codeOf(b))}\nنام: ${b.name}\nخدمت: ${b.sname}\n${k==='proposed'?'زمان پیشنهادی':'زمان'}: ${fFull.format(parse(b.date))}، ساعت ${T(b.time)}`;
  if(k==='proposed'&&b.orig)t+=`\nزمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}`;
+ if(bookingVip(b))t+=`\nنوع نوبت: VIP`;if(bookingPrice(b))t+=`\nهزینه: ${price(bookingPrice(b))}`;
  t+=`\nوضعیت: ${STATUS[k]}`;
  if(k==='proposed')t+='\nبرای پذیرش یا رد پیشنهاد، بخش «نوبت‌های من» را ببینید یا با آرایشگاه تماس بگیرید.';
  if(k==='pending'||k==='confirmed')t+=`\nلطفاً حتماً ${fa(5)} دقیقه قبل از زمان نوبت در آرایشگاه حضور داشته باشید.`;
@@ -353,7 +441,7 @@ window.addEventListener('hashchange',()=>{window.scrollTo(0,0);render()});
 
 /* ---------- public ---------- */
 let P={tab:'book',sid:null,date:null,time:null,name:'',phone:'',note:'',done:null,lookup:null,lookInput:null};
-const head=(sub,exit)=>`<header class="top"><div class="wrap"><div class="brand"><h1>ریش و قیچی</h1><p>${sub}</p></div>${exit?'<button class="exit" data-act="logout">خروج</button>':(isAdminRoute()?'<a class="exit" href="#/">صفحه رزرو</a>':'<a class="exit" href="#/admin">ورود مدیر</a>')}</div></header><div class="pole" aria-hidden="true"></div>`;
+const head=(sub,exit)=>`<header class="top"><div class="wrap"><div class="brand"><h1>ریش و قیچی</h1><p>${sub}</p></div>${exit?'<button class="exit" data-act="logout">خروج</button>':(isAdminRoute()?'<a class="exit" href="#/">صفحه رزرو</a>':'<a class="exit" href="#/admin">ورود مدیر</a>')}</div></header>`;
 
 function renderPub(){
  const body=P.done?doneView():(P.tab==='book'?bookView():mineView());
@@ -365,24 +453,24 @@ function renderPub(){
 function bookView(){
  const svc=db.services.find(x=>x.id===P.sid);
  let h=`<section id="s1"><h2><span class="n">${fa(1)}</span>چه کاری می‌خواهید؟</h2><div class="rows">`+
- db.services.map(x=>`<button class="row ${P.sid===x.id?'on':''}" data-act="svc" data-id="${x.id}"><span class="t">${esc(x.name)}</span><span class="m"><b>${fa(x.min)} دقیقه</b>${price(x.price)}</span></button>`).join('')+`</div></section>`;
+ db.services.map(x=>`<button class="row ${P.sid===x.id?'on':''}" data-act="svc" data-id="${x.id}"><span class="t">${esc(x.name)}</span><span class="m"><b>${fa(x.min)} دقیقه</b>${svcPriceHtml(x)}</span></button>`).join('')+`</div></section>`;
  if(!svc)return h;
  const n=nSlots(svc.min);
  h+=`<section id="s2"><h2><span class="n">${fa(2)}</span>کدام روز؟</h2><div class="days">`;
  for(let i=0;i<db.settings.horizon;i++){
   const d=addDays(today(),i),dt=parse(d),open=isOpen(d),free=open?freeStarts(d,n).length:0;
-  const label=!open?'تعطیل':(free===0?'پر':'');
-  h+=`<button class="day ${P.date===d?'on':''}" ${free===0?'disabled':''} data-act="day" data-d="${d}"><span class="w">${fWeekS.format(dt)}</span><span class="d">${fa(fDay.format(dt))}</span><span class="mo">${fMon.format(dt)}</span><span class="s">${label}</span></button>`;
+  const vip=isVip(d),label=!open?'تعطیل':(free===0?'پر':(vip?'VIP':''));
+  h+=`<button class="day ${P.date===d?'on':''}${vip&&open?' vip':''}" ${free===0?'disabled':''} data-act="day" data-d="${d}"><span class="w">${fWeekS.format(dt)}</span><span class="d">${fa(fDay.format(dt))}</span><span class="mo">${fMon.format(dt)}</span><span class="s">${label}</span></button>`;
  }
  h+=`</div></section>`;
  if(!P.date)return h;
  const slots=freeStarts(P.date,n);
- h+=`<section id="s3"><h2><span class="n">${fa(3)}</span>چه ساعتی؟</h2><p class="hint">ساعت‌های خالی ${fFull.format(parse(P.date))}</p>`;
+ h+=`<section id="s3"><h2><span class="n">${fa(3)}</span>چه ساعتی؟</h2><p class="hint">ساعت‌های خالی ${fFull.format(parse(P.date))}</p>${isVip(P.date)?'<div class="vipbar">این روز، روز VIP است و قیمت‌ها طبق نرخ VIP محاسبه می‌شود.</div>':''}`;
  h+=slots.length?`<div class="times">${slots.map(t=>`<button class="time ${P.time===t?'on':''}" data-act="time" data-t="${t}">${T(t)}</button>`).join('')}</div>`:`<p class="empty">این روز ساعت خالی ندارد. روز دیگری انتخاب کنید.</p>`;
  h+=`</section>`;
  if(P.time==null)return h;
  h+=`<section id="s4"><h2><span class="n">${fa(4)}</span>مشخصات شما</h2>
- <div class="summary"><b>${esc(svc.name)}</b><br>${fFull.format(parse(P.date))}، ساعت ${T(P.time)}</div>
+ <div class="summary"><b>${esc(svc.name)}</b><br>${fFull.format(parse(P.date))}، ساعت ${T(P.time)}${isVip(P.date)?' <span class="chip vip">VIP</span>':''}${svcPrice(svc,P.date)?`<br>هزینه: <b>${price(svcPrice(svc,P.date))}</b>`:''}</div>
  <label class="field"><span>نام و نام خانوادگی</span><input id="f-name" autocomplete="name" value="${esc(P.name)}"></label>
  <label class="field"><span>شماره موبایل</span><input id="f-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="۰۹۱۲۳۴۵۶۷۸۹" value="${esc(P.phone||getLP())}"></label>
  <label class="field"><span>توضیحات (اختیاری)</span><textarea id="f-note">${esc(P.note)}</textarea></label>
@@ -404,7 +492,7 @@ function mineView(){
  let h=`<section><h2>نوبت‌های من</h2><p class="hint">نوبت‌هایی که با همین دستگاه ثبت کرده‌اید. اگر از دستگاه دیگری رزرو کرده‌اید، با آرایشگاه تماس بگیرید.</p>`;
   h+=`<div style="margin-top:18px">`+(list.length?list.map(b=>{
    const future=(b.date+' '+b.time)>=(today()+' '+fromMin(new Date().getHours()*60+new Date().getMinutes()));
-   return `<div class="item"><div class="hd"><b>${esc(b.sname)}</b>${chip(b.status)}</div><p>${b.status==='proposed'?'زمان پیشنهادی: ':''}${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.status==='proposed'&&b.orig?`<p>زمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}<div class="acts">${b.status==='proposed'?`<button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">پذیرفتن زمان جدید</button><button class="btn sm danger" data-act="declineprop" data-id="${b.id}">نمی‌پذیرم</button>`:(active(b)&&future?`<button class="btn sm danger" data-act="mycancel" data-id="${b.id}">لغو نوبت</button>`:'')}<button class="btn sm" data-act="receipt" data-id="${b.id}">رسید</button></div></div>`}).join(''):`<p class="empty">نوبتی با این شماره پیدا نشد.</p>`)+`</div>`;
+   return `<div class="item"><div class="hd"><b>${esc(b.sname)} ${vipChip(b)}</b>${chip(b.status)}</div><p>${b.status==='proposed'?'زمان پیشنهادی: ':''}${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.status==='proposed'&&b.orig?`<p>زمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}${priceP(b)}<div class="acts">${b.status==='proposed'?`<button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">پذیرفتن زمان جدید</button><button class="btn sm danger" data-act="declineprop" data-id="${b.id}">نمی‌پذیرم</button>`:(active(b)&&future?`<button class="btn sm danger" data-act="mycancel" data-id="${b.id}">لغو نوبت</button>`:'')}<button class="btn sm" data-act="receipt" data-id="${b.id}">رسید</button></div></div>`}).join(''):`<p class="empty">نوبتی با این شماره پیدا نشد.</p>`)+`</div>`;
  return h+`</section>`;
 }
 
@@ -418,7 +506,7 @@ async function submitBooking(){
  const n=nSlots(svc.min);
  if(!freeStarts(P.date,n).includes(P.time)){P.time=null;render('s3');return toast('این ساعت دیگر خالی نیست. ساعت دیگری انتخاب کنید.')}
  if(!myUid())return toast('اتصال برقرار نیست. چند لحظه بعد دوباره تلاش کنید.');
- const b={id:uid(),date:P.date,time:fromMin(P.time),sid:svc.id,sname:svc.name,n,name,phone,note:P.note.trim(),code:newCode(),status:'pending',created:Date.now(),uid:myUid(),cells:cellIds(P.date,P.time,n)};
+ const b={id:uid(),date:P.date,time:fromMin(P.time),sid:svc.id,sname:svc.name,n,name,phone,note:P.note.trim(),code:newCode(),price:svcPrice(svc,P.date),vip:isVip(P.date),status:'pending',created:Date.now(),uid:myUid(),cells:cellIds(P.date,P.time,n)};
  sending=true;
  try{await withTimeout(placeBooking(b))}
  catch(err){
@@ -446,8 +534,8 @@ function renderAdmin(){
 function reqView(){
  const list=db.bookings.filter(b=>b.status==='pending').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
  let h=`<h2>درخواست‌های جدید</h2>`;
- h+=list.length?list.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)}</b><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a></div>
-  <p>${esc(b.sname)}</p><p>${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.note?`<p>توضیحات: ${esc(b.note)}</p>`:''}
+ h+=list.length?list.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)} ${vipChip(b)}</b><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a></div>
+  <p>${esc(b.sname)}${bookingPrice(b)?' · '+price(bookingPrice(b)):''}</p><p>${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.note?`<p>توضیحات: ${esc(b.note)}</p>`:''}
   <div class="acts"><button class="btn sm ok" data-act="approve" data-id="${b.id}">تأیید</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button><button class="btn sm" data-act="goday" data-d="${b.date}">دیدن در تقویم</button></div></div>`).join(''):`<p class="empty">درخواست جدیدی نیست.</p>`;
  const prop=db.bookings.filter(b=>b.status==='proposed').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
  if(prop.length)h+=`<h2 style="margin-top:30px">منتظر پاسخ مشتری</h2>`+prop.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)}</b>${chip('proposed')}</div><p>زمان پیشنهادی: ${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.orig?`<p>زمان درخواستی: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}
@@ -462,20 +550,22 @@ function calView(){
  const counts={};db.bookings.forEach(b=>{if(active(b))counts[b.date]=(counts[b.date]||0)+1});
  let h=`<div class="dnav"><button class="btn sm" data-act="shift" data-n="1" aria-label="روز بعد">روز بعد</button><h2>${fFull.format(dt)}</h2><button class="btn sm" data-act="shift" data-n="-1" aria-label="روز قبل">روز قبل</button></div><div class="strip">`;
  for(let i=0;i<14;i++){const x=addDays(A.stripStart,i),xd=parse(x);
-  h+=`<button class="day ${x===d?'on':''}" data-act="goday" data-d="${x}"><span class="w">${fWeekS.format(xd)}</span><span class="d">${fa(fDay.format(xd))}</span><span class="cnt">${counts[x]?fa(counts[x]):''}</span></button>`}
+  h+=`<button class="day ${x===d?'on':''}${isVip(x)?' vip':''}" data-act="goday" data-d="${x}"><span class="w">${fWeekS.format(xd)}</span><span class="d">${fa(fDay.format(xd))}</span><span class="cnt">${counts[x]?fa(counts[x]):(isVip(x)?'VIP':'')}</span></button>`}
  h+=`</div><div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">${d!==today()?`<button class="btn sm" data-act="goday" data-d="${today()}">امروز</button>`:''}`;
  const weekly=s.daysOff.includes(dt.getDay()),closed=s.closedDates.includes(d);
  if(!weekly)h+=`<button class="btn sm ${closed?'':'danger'}" data-act="toggleday">${closed?'باز کردن این روز':'تعطیل کردن این روز'}</button>`;
- if(!weekly&&!closed)h+=`<button class="btn sm" data-act="blockhours">بستن ساعتی یا نیم‌روز</button>`;
+ if(!weekly&&!closed)h+=`<button class="btn sm primary" data-act="togglevip">${isVip(d)?'برداشتن VIP از این روز':'VIP کردن این روز'}</button>`;
+if(!weekly&&!closed)h+=`<button class="btn sm" data-act="blockhours">بستن ساعتی یا نیم‌روز</button>`;
  h+=`</div>`;
- if(!isOpen(d))return h+`<p class="empty">${weekly?'این روز تعطیل هفتگی است.':'این روز تعطیل شده است.'}</p>`;
+ if(isVip(d)&&isOpen(d))h+=`<div class="vipbar">روز VIP — نوبت‌های این روز با نرخ VIP ثبت می‌شوند.</div>`;
+if(!isOpen(d))return h+`<p class="empty">${weekly?'این روز تعطیل هفتگی است.':'این روز تعطیل شده است.'}</p>`;
  const map={},bm=blockMap(d);
  db.bookings.forEach(b=>{if(b.date!==d||!active(b))return;const t=toMin(b.time);for(let i=0;i<b.n;i++)map[t+i*sl]={b,first:i===0}});
- h+=`<div class="tl">`;
+ h+=`<div class="tl${isVip(d)?' vip':''}">`;
  for(let t=toMin(s.start);t<toMin(s.end);t+=sl){
   const m=map[t];let cell;
   if(!m)cell=bm[t]?`<button class="blk" data-act="unblock" data-id="${bm[t].id}">بسته${bm[t].note?` (${esc(bm[t].note)})`:''}<small>برای برداشتن لمس کنید</small></button>`:`<button class="free" data-act="addslot" data-t="${t}">خالی</button>`;
-  else if(m.first)cell=`<button class="bk ${m.b.status}${isPast(m.b)?' past':''}" data-act="bk" data-id="${m.b.id}"><b>${esc(m.b.name)}</b><span>${esc(m.b.sname)}</span> ${m.b.status!=='confirmed'?chip(m.b.status):''}${isPast(m.b)?'<span class="chip past">زمان گذشته</span>':''}</button>`;
+  else if(m.first)cell=`<button class="bk ${m.b.status}${isPast(m.b)?' past':''}" data-act="bk" data-id="${m.b.id}"><b>${esc(m.b.name)}${bookingVip(m.b)?' <span class="chip vip">VIP</span>':''}</b><span>${esc(m.b.sname)}</span> ${m.b.status!=='confirmed'?chip(m.b.status):''}${isPast(m.b)?'<span class="chip past">زمان گذشته</span>':''}</button>`;
   else cell=`<div class="cont ${m.b.status}${isPast(m.b)?' past':''}"></div>`;
   h+=`<div class="slot"><div class="tm">${T(t)}</div><div>${cell}</div></div>`;
  }
@@ -490,8 +580,9 @@ function setView(){
  <div class="two"><label class="field"><span>طول هر نوبت (دقیقه)</span><select data-set="slot">${[15,20,30,45,60].map(v=>`<option value="${v}" ${s.slot===v?'selected':''}>${fa(v)}</option>`).join('')}</select></label>
  <label class="field"><span>مشتری تا چند روز بعد رزرو کند</span><select data-set="horizon">${[7,14,21,30].map(v=>`<option value="${v}" ${s.horizon===v?'selected':''}>${fa(v)} روز</option>`).join('')}</select></label></div>
  <span style="font-weight:600;display:block;margin-bottom:6px">تعطیلی هفتگی</span><div class="days7">${dn.map(([n,v])=>`<label><input type="checkbox" data-day="${v}" ${s.daysOff.includes(v)?'checked':''}>${n}</label>`).join('')}</div></div>
- <div class="setgrp"><h2>خدمات</h2>${db.services.map(x=>`<div class="svc"><input class="nm" data-svc="${x.id}" data-f="name" value="${esc(x.name)}" aria-label="نام خدمت"><input data-svc="${x.id}" data-f="min" type="number" inputmode="numeric" min="5" step="5" value="${x.min}" aria-label="مدت (دقیقه)"><input data-svc="${x.id}" data-f="price" type="number" inputmode="numeric" min="0" value="${x.price||''}" placeholder="قیمت (تومان)" aria-label="قیمت به تومان"><button class="x" data-act="delsvc" data-id="${x.id}" aria-label="حذف خدمت">حذف</button></div>`).join('')}
+ <div class="setgrp"><h2>خدمات</h2><p class="hint">قیمت‌ها به تومان. اگر «قیمت VIP» خالی باشد، در روز VIP همان قیمت عادی اعمال می‌شود.</p>${db.services.map(x=>`<div class="svc"><input class="nm" data-svc="${x.id}" data-f="name" value="${esc(x.name)}" aria-label="نام خدمت"><input data-svc="${x.id}" data-f="min" type="number" inputmode="numeric" min="5" step="5" value="${x.min}" aria-label="مدت (دقیقه)"><input data-svc="${x.id}" data-f="price" type="number" inputmode="numeric" min="0" value="${x.price||''}" placeholder="قیمت عادی" aria-label="قیمت عادی به تومان"><input data-svc="${x.id}" data-f="vipPrice" type="number" inputmode="numeric" min="0" value="${x.vipPrice||''}" placeholder="قیمت VIP" aria-label="قیمت VIP به تومان"><button class="x" data-act="delsvc" data-id="${x.id}" aria-label="حذف خدمت">حذف</button></div>`).join('')}
  <button class="btn block" data-act="addsvc">افزودن خدمت</button></div>
+ ${vipSection()}
  <div class="setgrp"><h2>اطلاعات تماس (نمایش در صفحه مشتری)</h2>
  <label class="field"><span>تلفن</span><input type="tel" data-set="phone" value="${esc(s.phone)}"></label>
  <label class="field"><span>آدرس</span><input data-set="address" value="${esc(s.address)}"></label></div>
@@ -507,7 +598,7 @@ function closeDlg(){if($dlg.open)$dlg.close()}
 $dlg.addEventListener('click',e=>{if(e.target===$dlg)closeDlg()});
 function showBooking(id){
  const b=db.bookings.find(x=>x.id===id);if(!b)return;
- openDlg(`<h3>${esc(b.name)}</h3><p style="margin:0">${esc(b.sname)}</p><p style="margin:0">${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>
+ openDlg(`<h3>${esc(b.name)}</h3><p style="margin:0">${esc(b.sname)}${bookingPrice(b)?' · '+price(bookingPrice(b)):''} ${vipChip(b)}</p><p style="margin:0">${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>
  <p style="margin:6px 0"><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a> ${chip(b.status)}</p>${b.note?`<p style="margin:0">توضیحات: ${esc(b.note)}</p>`:''}
  <div class="acts">${b.status==='pending'?`<button class="btn sm ok" data-act="approve" data-id="${b.id}">تأیید</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button>`:`<button class="btn sm danger" data-act="admcancel" data-id="${b.id}">${b.status==='proposed'?'لغو پیشنهاد':'لغو نوبت'}</button><button class="btn sm" data-act="notify" data-id="${b.id}">پیام به مشتری</button>`}<button class="btn sm" data-act="closedlg">بستن</button></div>`);
 }
@@ -575,6 +666,8 @@ document.addEventListener('click',e=>{
   case'toggleday':{const cl=db.settings.closedDates,i=cl.indexOf(A.date);
    if(i>=0)cl.splice(i,1);else{const has=db.bookings.some(b=>b.date===A.date&&active(b));if(has&&!confirm('در این روز نوبت ثبت شده است. باز هم تعطیل شود؟'))break;cl.push(A.date)}
    saveCfg();render()}break;
+  case'togglevip':{const v=db.settings.vipDates,i=v.indexOf(A.date);if(i>=0)v.splice(i,1);else v.push(A.date);saveCfg();render();toast(i>=0?'VIP این روز برداشته شد.':'این روز VIP شد.')}break;
+  case'unvip':{db.settings.vipDates=db.settings.vipDates.filter(x=>x!==el.dataset.d);saveCfg();render();toast('VIP برداشته شد.')}break;
   case'bk':showBooking(id);break;
   case'addslot':showAdd(+el.dataset.t);break;
   case'closedlg':closeDlg();break;
@@ -609,7 +702,7 @@ document.addEventListener('click',e=>{
   case'saveadd':{const name=document.getElementById('a-name').value.trim();if(!name)return toast('نام مشتری را وارد کنید.');
    const phone=en(document.getElementById('a-phone').value).replace(/[\s-]/g,''),svc=db.services.find(x=>x.id===document.getElementById('a-svc').value),n=nSlots(svc.min),t=+el.dataset.t;
    if(!canFit(A.date,t,n))return toast('این ساعت برای این خدمت کافی نیست.');
-   placeBooking({id:uid(),date:A.date,time:fromMin(t),sid:svc.id,sname:svc.name,n,name,phone,note:'',code:newCode(),status:'confirmed',created:Date.now(),uid:myUid(),cells:cellIds(A.date,t,n)}).then(()=>{closeDlg();render();toast('نوبت ثبت شد.')}).catch(()=>toast('ثبت نشد. شاید این ساعت پر شده یا اتصال قطع است.'))}break;
+   placeBooking({id:uid(),date:A.date,time:fromMin(t),sid:svc.id,sname:svc.name,n,name,phone,note:'',code:newCode(),price:svcPrice(svc,A.date),vip:isVip(A.date),status:'confirmed',created:Date.now(),uid:myUid(),cells:cellIds(A.date,t,n)}).then(()=>{closeDlg();render();toast('نوبت ثبت شد.')}).catch(()=>toast('ثبت نشد. شاید این ساعت پر شده یا اتصال قطع است.'))}break;
   case'addsvc':db.services.push({id:uid(),name:'خدمت جدید',min:30,price:0});saveCfg();render();break;
   case'delsvc':if(db.services.length<2)return toast('حداقل یک خدمت باید بماند.');if(confirm('این خدمت حذف شود؟ نوبت‌های قبلی تغییر نمی‌کنند.')){db.services=db.services.filter(x=>x.id!==id);saveCfg();render()}break;
   case'setpin':{const v=en(document.getElementById('newpin').value).trim();if(!/^\d{6}$/.test(v))return toast('رمز باید دقیقاً ۶ رقم باشد.');
@@ -661,7 +754,7 @@ document.addEventListener('change',e=>{
   const v=+t.dataset.day,set=new Set(db.settings.daysOff);t.checked?set.add(v):set.delete(v);db.settings.daysOff=[...set];saveCfg();toast('ذخیره شد.');
  }else if(t.dataset.svc){
   const x=db.services.find(s=>s.id===t.dataset.svc),f=t.dataset.f;if(!x)return;
-  if(f==='name'){x.name=t.value.trim()||x.name}else if(f==='min'){x.min=Math.max(5,+en(t.value)||x.min)}else{x.price=Math.max(0,+en(t.value)||0)}
+  if(f==='name'){x.name=t.value.trim()||x.name}else if(f==='min'){x.min=Math.max(5,+en(t.value)||x.min)}else if(f==='vipPrice'){x.vipPrice=Math.max(0,+en(t.value)||0)}else{x.price=Math.max(0,+en(t.value)||0)}
   saveCfg();toast('ذخیره شد.');
  }else if(t.id==='imp'&&t.files[0]){
   const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.settings||!Array.isArray(d.services))throw 0;
