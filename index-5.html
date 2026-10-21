@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>ریش و قیچی | آرایشگاه پیکاسو</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#15233B;--red:#C23B2E;--blue:#2F5D9E;--paper:#F6F6F4;--line:#D3D8E0;--steel:#5F6B7D;--ok:#2B7A57;--white:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:12px}
+body{margin:0;font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--paper);color:var(--ink);line-height:1.75;font-size:16px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+a{color:var(--blue)}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+.top{background:var(--ink);color:#fff;padding:22px 0 18px}
+.top .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.brand h1{margin:0;font-size:2.3rem;font-weight:900;line-height:1.2;letter-spacing:0}
+.brand p{margin:2px 0 0;color:#B9C3D3;font-size:.95rem}
+.top .exit{background:none;border:1.5px solid #5F6B7D;color:#fff;border-radius:6px;padding:4px 14px;min-height:40px}
+.pole{height:16px;background:repeating-linear-gradient(-45deg,var(--red) 0 14px,#fff 14px 28px,var(--blue) 28px 42px,#fff 42px 56px)}
+.seg{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid var(--ink);margin:0 -16px}
+.seg button{background:none;border:0;padding:12px 8px;font-weight:600;color:var(--steel);min-height:48px}
+.seg button[aria-selected=true]{color:var(--ink);box-shadow:inset 0 -4px 0 var(--red);font-weight:800}
+main{padding-bottom:40px}
+h2{font-size:1.1rem;font-weight:800;margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+h2 .n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-size:.9rem;flex:none}
+.rows{display:grid;gap:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:start;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:10px 14px;min-height:56px;width:100%}
+.row .t{font-weight:600}
+.row .m{font-size:.85rem;color:var(--steel);text-align:end;line-height:1.5}
+.row .m b{display:block;font-weight:600;color:inherit}
+.row.on{background:var(--ink);color:#fff}
+.row.on .m{color:#C9D2E0}
+.days{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin:0 -2px;scroll-snap-type:x proximity}
+.day{flex:none;width:72px;min-height:84px;background:#fff;border:1.5px solid var(--ink);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1.5;scroll-snap-align:start}
+.day .w{font-size:.8rem;color:var(--steel)}
+.day .d{font-size:1.4rem;font-weight:800}
+.day .mo{font-size:.8rem}
+.day .s{font-size:.72rem;color:var(--red);font-weight:600}
+.day.on{background:var(--ink);color:#fff}
+.day.on .w{color:#C9D2E0}
+.day:disabled{border-color:var(--line);color:#9AA3B2;background:#EEF0F3;cursor:not-allowed}
+.day:disabled .w,.day:disabled .s{color:#9AA3B2}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.time{background:#fff;border:1.5px solid var(--ink);border-radius:6px;min-height:46px;font-weight:600}
+.time.on{background:var(--ink);color:#fff}
+.hint{color:var(--steel);margin:6px 0}
+.field{display:block;margin:0 0 12px}
+.field>span{display:block;font-weight:600;margin-bottom:4px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--ink);border-radius:6px;background:#fff;min-height:46px}
+.field textarea{min-height:76px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:6px;border:1.5px solid var(--ink);background:#fff;font-weight:800}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn.block{display:flex;width:100%}
+.btn.sm{min-height:42px;padding:0 16px;font-size:.92rem}
+.btn.danger{border-color:var(--red);color:var(--red)}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.summary{border-inline-start:6px solid var(--red);background:#fff;padding:12px 16px;margin:0 0 14px;border-radius:0 6px 6px 0}
+html[dir=rtl] .summary{border-radius:6px 0 0 6px}
+.summary b{font-weight:800}
+.chip{display:inline-block;font-size:.8rem;font-weight:600;padding:0 10px;border-radius:99px;border:1.5px solid;line-height:1.7}
+.chip.pending{color:var(--blue);border-color:var(--blue)}
+.chip.confirmed{color:var(--ok);border-color:var(--ok)}
+.chip.rejected,.chip.cancelled,.chip.declined{color:var(--red);border-color:var(--red)}
+.chip.proposed{color:#8A5F00;border-color:#B88300}
+.item{background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:12px 14px;margin:0 0 10px}
+.item .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px}
+.item .hd b{font-size:1.05rem}
+.item p{margin:0;color:var(--steel)}
+.item .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.empty{padding:28px 8px;text-align:center;color:var(--steel)}
+.foot{margin-top:36px;padding-top:14px;border-top:1.5px solid var(--line);color:var(--steel);font-size:.9rem;text-align:center}
+.foot a{color:var(--steel)}
+/* admin */
+.nav{position:fixed;inset-inline:0;bottom:0;background:#fff;border-top:1.5px solid var(--ink);display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+.nav button{background:none;border:0;min-height:58px;font-weight:600;color:var(--steel);position:relative}
+.nav button[aria-selected=true]{color:var(--ink);font-weight:800;box-shadow:inset 0 4px 0 var(--red)}
+.nav .bd{position:absolute;top:6px;margin-inline-start:6px;background:var(--red);color:#fff;border-radius:99px;font-size:.75rem;min-width:22px;line-height:22px;text-align:center;display:inline-block;position:static;margin-inline-start:6px}
+.adm{padding-bottom:96px}
+.dnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 10px}
+.dnav h2{margin:0;font-size:1.05rem}
+.strip{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 8px}
+.strip .day{width:58px;min-height:72px}
+.strip .day .d{font-size:1.15rem}
+.strip .day .cnt{font-size:.72rem;font-weight:800;color:var(--red);min-height:1.2em}
+.strip .day.on .cnt{color:#fff}
+.tl{border-top:1.5px solid var(--ink);margin-top:8px}
+.slot{display:grid;grid-template-columns:62px 1fr;border-bottom:1px solid var(--line);min-height:56px}
+.slot .tm{padding:12px 0;color:var(--steel);font-size:.9rem}
+.free{background:none;border:0;text-align:start;color:#8A93A3;padding:0 8px;min-height:56px;width:100%}
+.free:hover{background:#ECEFF3}
+.bk{width:100%;text-align:start;border:0;border-radius:4px;margin:4px 0;padding:8px 12px;border-inline-start:5px solid var(--blue);background:#E6EDF8;display:block}
+.bk.confirmed{border-color:var(--ok);background:#E3F1EA}
+.bk.proposed{border-color:#C98A00;background:#FBF1D9}
+.bk b{display:block}
+.bk span{font-size:.85rem;color:var(--steel)}
+.cont{margin:0 0 0;border-inline-start:5px solid var(--blue);background:#E6EDF8;height:100%}
+.cont.confirmed{border-color:var(--ok);background:#E3F1EA}
+.cont.proposed{border-color:#C98A00;background:#FBF1D9}
+.blk{width:100%;min-height:56px;text-align:start;border:0;padding:0 12px;color:var(--steel);background:repeating-linear-gradient(-45deg,#E4E7EC 0 8px,#EEF0F3 8px 16px)}
+.blk small{margin-inline-start:8px;color:#8A93A3}
+.rcpt{background:#fff;border:1.5px dashed var(--ink);border-radius:6px;padding:12px 14px;white-space:pre-line;line-height:1.9;margin:10px 0}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.setgrp{border-top:1.5px solid var(--ink);padding-top:4px;margin-top:26px}
+.setgrp h2{margin-top:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.days7{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.days7 label{display:flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:6px;background:#fff;padding:6px 12px;min-height:44px}
+.days7 input{width:20px;height:20px;accent-color:var(--red)}
+.svc{border:1.5px solid var(--ink);border-radius:6px;background:#fff;padding:10px;margin-bottom:8px;display:grid;grid-template-columns:1fr 84px 112px 44px;gap:8px;align-items:center}
+.svc input{width:100%;padding:8px;border:1.5px solid var(--line);border-radius:6px;min-height:42px;background:#fff}
+.svc .x{min-height:42px;border:1.5px solid var(--red);border-radius:6px;background:#fff;color:var(--red);font-weight:800}
+.svc small{grid-column:1/-1;color:var(--steel);margin-top:-4px}
+.warn{background:#FFF1EF;border:1.5px solid var(--red);border-radius:6px;padding:10px 12px;margin-top:14px}
+dialog{border:1.5px solid var(--ink);border-radius:8px;padding:18px;width:min(92vw,420px);color:var(--ink);background:var(--paper)}
+dialog::backdrop{background:rgba(21,35,59,.55)}
+dialog h3{margin:0 0 8px;font-size:1.15rem}
+dialog .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+#toast{position:fixed;inset-inline:16px;bottom:84px;margin:auto;max-width:360px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:6px;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+#toast.show{opacity:1}
+@media(max-width:380px){.svc{grid-template-columns:1fr 1fr}.svc .nm{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<style>
+:root{--ink:#111827;--red:#e0523e;--blue:#3b82f6;--paper:#f5f7fb;--line:#e5e7eb;--steel:#64748b;--ok:#15956b;--white:#fff;--shadow:0 10px 30px rgba(15,23,42,.07);--shadow-lg:0 18px 50px rgba(15,23,42,.13);--r:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:18px}
+body{margin:0;font-family:'Vazirmatn',Tahoma,sans-serif;background:radial-gradient(circle at 100% 0%,rgba(59,130,246,.07),transparent 30%),radial-gradient(circle at 0% 20%,rgba(224,82,62,.05),transparent 28%),var(--paper);color:var(--ink);line-height:1.75;font-size:16px}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}:focus-visible{outline:3px solid rgba(59,130,246,.3);outline-offset:3px}a{color:var(--blue)}
+.wrap{max-width:600px;margin:0 auto;padding:0 18px}
+.top{position:relative;overflow:hidden;background:linear-gradient(145deg,#111827,#17243b 65%,#203858);color:#fff;padding:28px 0 26px;box-shadow:0 8px 28px rgba(15,23,42,.14)}
+.top:before,.top:after{content:"";position:absolute;border-radius:50%;pointer-events:none}.top:before{width:180px;height:180px;background:rgba(255,255,255,.045);left:-70px;top:-95px}.top:after{width:220px;height:220px;background:rgba(59,130,246,.08);right:-100px;bottom:-150px}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative;z-index:1}.brand h1{margin:0;font-size:2rem;font-weight:900;line-height:1.2;letter-spacing:-.03em}.brand p{margin:5px 0 0;color:#b8c4d6;font-size:.9rem}
+.top .exit{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:12px;padding:7px 14px;min-height:42px;backdrop-filter:blur(8px)}
+.pole{height:7px;background:repeating-linear-gradient(-45deg,var(--red) 0 13px,#fff 13px 26px,var(--blue) 26px 39px,#fff 39px 52px)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#e9edf4;border:1px solid #dde3ec;border-radius:15px;padding:5px;margin:18px 0 4px}.seg button{background:transparent;border:0;border-radius:11px;padding:10px 8px;font-weight:700;color:var(--steel);min-height:46px;transition:.18s}.seg button[aria-selected=true]{color:var(--ink);background:#fff;box-shadow:0 3px 12px rgba(15,23,42,.08);font-weight:900}
+main{padding-bottom:42px}h2{font-size:1.08rem;font-weight:900;margin:28px 0 12px;display:flex;align-items:center;gap:10px}h2 .n{display:inline-grid;place-items:center;width:31px;height:31px;border-radius:10px;background:linear-gradient(145deg,#111827,#263650);color:#fff;font-size:.85rem;flex:none;box-shadow:0 5px 12px rgba(17,24,39,.16)}
+.rows{display:grid;gap:10px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 15px;min-height:64px;width:100%;box-shadow:0 3px 12px rgba(15,23,42,.035);transition:.16s}.row:active{transform:scale(.985)}.row .t{font-weight:800}.row .m{font-size:.82rem;color:var(--steel);text-align:end;line-height:1.5}.row .m b{display:block;font-weight:700}.row.on{background:linear-gradient(135deg,#17243b,#243b5e);color:#fff;border-color:#17243b;box-shadow:0 10px 24px rgba(17,24,39,.18)}.row.on .m{color:#cbd6e5}
+.days{display:flex;gap:9px;overflow-x:auto;padding:2px 2px 12px;margin:0 -2px;scroll-snap-type:x proximity;scrollbar-width:none}.days::-webkit-scrollbar,.strip::-webkit-scrollbar{display:none}.day{flex:none;width:78px;min-height:91px;background:#fff;border:1px solid var(--line);border-radius:17px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.45;scroll-snap-align:start;box-shadow:0 3px 12px rgba(15,23,42,.035);transition:.16s}.day .w{font-size:.76rem;color:var(--steel)}.day .d{font-size:1.35rem;font-weight:900}.day .mo{font-size:.76rem}.day .s{font-size:.68rem;color:var(--red);font-weight:800;min-height:1.2em}.day.on{background:linear-gradient(145deg,#17243b,#243b5e);color:#fff;border-color:#17243b;box-shadow:0 10px 22px rgba(17,24,39,.18);transform:translateY(-1px)}.day.on .w{color:#cbd6e5}.day:disabled{border-color:#e7eaf0;color:#aab2bf;background:#eef1f5;box-shadow:none}.day:disabled .w,.day:disabled .s{color:#aab2bf}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:9px}.time{background:#fff;border:1px solid var(--line);border-radius:13px;min-height:49px;font-weight:800;box-shadow:0 3px 10px rgba(15,23,42,.035)}.time.on{background:linear-gradient(135deg,var(--red),#f06a55);color:#fff;border-color:var(--red);box-shadow:0 8px 18px rgba(224,82,62,.2)}
+.hint{color:var(--steel);margin:6px 0}.field{display:block;margin:0 0 13px}.field>span{display:block;font-weight:800;margin-bottom:5px;font-size:.92rem}.field input,.field select,.field textarea{width:100%;padding:11px 13px;border:1px solid #dbe1ea;border-radius:13px;background:#fff;min-height:48px;box-shadow:inset 0 1px 2px rgba(15,23,42,.02);transition:.18s}.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(59,130,246,.65);box-shadow:0 0 0 4px rgba(59,130,246,.1);outline:none}.field textarea{min-height:82px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 20px;border-radius:13px;border:1px solid #dbe1ea;background:#fff;font-weight:900;box-shadow:0 4px 12px rgba(15,23,42,.04);transition:.16s}.btn:active{transform:translateY(1px) scale(.99)}.btn.primary{background:linear-gradient(135deg,var(--red),#f06a55);border-color:var(--red);color:#fff;box-shadow:0 9px 20px rgba(224,82,62,.2)}.btn.block{display:flex;width:100%}.btn.sm{min-height:42px;padding:0 14px;font-size:.88rem;border-radius:11px}.btn.danger{border-color:#f2c1ba;color:#c33d2f;background:#fff8f7}.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}
+.summary{border-inline-start:5px solid var(--red);background:linear-gradient(135deg,#fff,#fff9f8);padding:13px 15px;margin:0 0 15px;border-radius:15px;box-shadow:var(--shadow)}.summary b{font-weight:900}
+.chip{display:inline-block;font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:99px;border:1px solid;line-height:1.7;background:#fff}.chip.pending{color:var(--blue);border-color:#a9c8fb;background:#eef5ff}.chip.confirmed{color:var(--ok);border-color:#9cdbc4;background:#eaf8f2}.chip.rejected,.chip.cancelled,.chip.declined{color:var(--red);border-color:#f0b6ae;background:#fff5f3}.chip.proposed{color:#9a6700;border-color:#e7c87a;background:#fff9e8}
+.item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 15px;margin:0 0 11px;box-shadow:var(--shadow)}.item .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:3px}.item .hd b{font-size:1rem;font-weight:900}.item p{margin:0;color:var(--steel)}.item .acts{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}.empty{padding:30px 8px;text-align:center;color:var(--steel)}.foot{margin-top:38px;padding:18px 0 8px;border-top:1px solid var(--line);color:var(--steel);font-size:.86rem;text-align:center}
+.nav{position:fixed;inset-inline:10px;bottom:10px;background:rgba(255,255,255,.94);border:1px solid #e1e6ee;border-radius:18px;display:grid;grid-template-columns:repeat(3,1fr);padding:5px;padding-bottom:calc(5px + env(safe-area-inset-bottom));z-index:5;box-shadow:0 12px 35px rgba(15,23,42,.15);backdrop-filter:blur(16px)}.nav button{background:none;border:0;border-radius:13px;min-height:54px;font-weight:700;color:var(--steel)}.nav button[aria-selected=true]{color:var(--ink);font-weight:900;background:#f0f3f8}.nav .bd{background:var(--red);color:#fff;border-radius:99px;font-size:.7rem;min-width:21px;line-height:21px;text-align:center;display:inline-block;margin-inline-start:5px}.adm{padding-bottom:105px}
+.dnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 10px}.dnav h2{margin:0;font-size:1rem}.strip{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 9px;scrollbar-width:none}.strip .day{width:61px;min-height:74px;border-radius:14px}.strip .day .d{font-size:1.1rem}.strip .day .cnt{font-size:.68rem;font-weight:900;color:var(--red);min-height:1.2em}.strip .day.on .cnt{color:#fff}.tl{border-top:1px solid var(--line);margin-top:10px;background:#fff;border-radius:15px;overflow:hidden;box-shadow:var(--shadow)}.slot{display:grid;grid-template-columns:62px 1fr;border-bottom:1px solid #eef1f5;min-height:58px}.slot .tm{padding:13px 0;color:var(--steel);font-size:.82rem}.free{background:none;border:0;text-align:start;color:#a0a8b6;padding:0 9px;min-height:58px;width:100%}.free:hover{background:#f7f9fc}.bk{width:100%;text-align:start;border:0;border-radius:10px;margin:5px 0;padding:9px 11px;border-inline-start:5px solid var(--blue);background:#eef5ff;display:block}.bk.confirmed{border-color:var(--ok);background:#eaf8f2}.bk.proposed{border-color:#c98a00;background:#fff7df}.bk b{display:block;font-weight:900}.bk span{font-size:.8rem;color:var(--steel)}.cont{margin:0;border-inline-start:5px solid var(--blue);background:#eef5ff;height:100%}.cont.confirmed{border-color:var(--ok);background:#eaf8f2}.cont.proposed{border-color:#c98a00;background:#fff7df}.blk{width:100%;min-height:58px;text-align:start;border:0;padding:0 12px;color:#8b95a5;background:repeating-linear-gradient(-45deg,#edf0f4 0 8px,#f7f8fa 8px 16px)}.blk small{margin-inline-start:8px;color:#9aa3b1}
+.rcpt{background:#fff;border:1px dashed #cbd3df;border-radius:15px;padding:14px 15px;white-space:pre-line;line-height:1.9;margin:10px 0;box-shadow:var(--shadow)}.setgrp{border-top:1px solid var(--line);padding-top:6px;margin-top:28px}.setgrp h2{margin-top:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.days7{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.days7 label{display:flex;align-items:center;gap:6px;border:1px solid #dce2eb;border-radius:12px;background:#fff;padding:7px 11px;min-height:44px}.days7 input{width:19px;height:19px;accent-color:var(--red)}.svc{border:1px solid #dce2eb;border-radius:15px;background:#fff;padding:10px;margin-bottom:9px;display:grid;grid-template-columns:1fr 84px 112px 44px;gap:8px;align-items:center;box-shadow:0 3px 10px rgba(15,23,42,.025)}.svc input{width:100%;padding:8px;border:1px solid #e1e6ee;border-radius:10px;min-height:42px;background:#fff}.svc .x{min-height:42px;border:1px solid #f1b9b2;border-radius:10px;background:#fff8f7;color:var(--red);font-weight:900}.svc small{grid-column:1/-1;color:var(--steel);margin-top:-4px}.warn{background:#fff5f3;border:1px solid #f0b9b1;border-radius:13px;padding:11px 12px;margin-top:14px}
+dialog{border:0;border-radius:20px;padding:20px;width:min(92vw,440px);color:var(--ink);background:var(--paper);box-shadow:var(--shadow-lg)}dialog::backdrop{background:rgba(15,23,42,.58);backdrop-filter:blur(3px)}dialog h3{margin:0 0 8px;font-size:1.12rem;font-weight:900}dialog .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}#toast{position:fixed;inset-inline:16px;bottom:88px;margin:auto;max-width:370px;background:#111827;color:#fff;padding:11px 16px;border-radius:13px;text-align:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s;z-index:20;box-shadow:0 10px 25px rgba(15,23,42,.2)}#toast.show{opacity:1;transform:translateY(0)}
+.top a.exit{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap;font-weight:700}
+.bk.past,.cont.past{border-color:#9aa3b1;background:#e9ecf1}.bk.past b,.bk.past span{color:#8b95a5}.bk.past{opacity:.85}.chip.past{color:#6b7587;border-color:#c3cad5;background:#f3f5f8}
+input[dir=ltr]{text-align:left}
+@media(max-width:380px){.svc{grid-template-columns:1fr 1fr}.svc .nm{grid-column:1/-1}.brand h1{font-size:1.8rem}}@media(prefers-reduced-motion:reduce){*,html{scroll-behavior:auto!important;transition:none!important}}
+
+</style>
+<style>
+/* ===== تم مشکی و طلایی ===== */
+:root{color-scheme:dark;--ink:#f4efe3;--paper:#0a0a0b;--card:#151517;--card2:#1d1d20;--line:#2b2b30;--steel:#9d998e;--gold:#d4af37;--gold2:#f0d27a;--goldg:linear-gradient(135deg,#f3d982,#d4af37 55%,#b8902a);--red:#e5604f;--blue:#d4af37;--ok:#3fb68b;--white:#151517;--shadow:0 8px 24px rgba(0,0,0,.45);--shadow-lg:0 18px 50px rgba(0,0,0,.75)}
+body{background:radial-gradient(circle at 100% 0%,rgba(212,175,55,.09),transparent 32%),radial-gradient(circle at 0% 30%,rgba(212,175,55,.05),transparent 30%),#0a0a0b;color:var(--ink)}
+a{color:var(--gold2)}
+:focus-visible{outline:3px solid rgba(212,175,55,.5)}
+.pole{display:none}
+.top{background:linear-gradient(145deg,#000,#111113 70%,#1a1609);border-bottom:1px solid rgba(212,175,55,.4);box-shadow:0 8px 28px rgba(0,0,0,.6)}
+.top:before{background:rgba(212,175,55,.05)}.top:after{background:rgba(212,175,55,.07)}
+.brand h1{background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.brand p{color:#b6af9b}
+.top .exit{background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.5);color:var(--gold2)}
+.seg{background:var(--card);border-color:var(--line)}
+.seg button{color:var(--steel)}
+.seg button[aria-selected=true]{background:var(--goldg);color:#14110a;box-shadow:0 6px 16px rgba(212,175,55,.25)}
+h2 .n{background:var(--goldg);color:#14110a;box-shadow:0 5px 12px rgba(212,175,55,.25)}
+.row,.day,.time,.item,.summary,.tl,.rcpt,.svc,.days7 label{background:var(--card);border-color:var(--line);color:var(--ink);box-shadow:var(--shadow)}
+.row .m,.day .w,.day .mo,.item p,.hint,.empty,.foot,.foot a{color:var(--steel)}
+.row.on,.day.on{background:var(--card2);border-color:var(--gold);color:var(--ink);box-shadow:0 0 0 1px var(--gold),0 10px 24px rgba(0,0,0,.55)}
+.row.on .m{color:var(--gold2)}.day.on .w,.day.on .mo{color:#cfc7ad}
+.day .s{color:var(--gold2)}
+.day:disabled{background:#101011;border-color:#1d1d20;color:#58554d;box-shadow:none}.day:disabled .w,.day:disabled .s,.day:disabled .mo{color:#58554d}
+.day.vip{background:linear-gradient(160deg,#2c2411,#171309);border-color:var(--gold)}
+.day.vip .w,.day.vip .mo{color:#dcc382}.day.vip .s,.day.vip .cnt{color:var(--gold2)}
+.day.vip.on{background:var(--goldg);border-color:var(--gold2);color:#17120a}
+.day.vip.on .w,.day.vip.on .mo,.day.vip.on .s,.day.vip.on .cnt{color:#3a2d08}
+.day.vip:disabled{background:#14120b;border-color:#3a3217;color:#6b6244}
+.strip .day .cnt{color:var(--gold2)}.strip .day.on .cnt{color:var(--gold2)}
+.time.on{background:var(--goldg);color:#14110a;border-color:var(--gold2);box-shadow:0 8px 18px rgba(212,175,55,.25)}
+.row .m .vp{display:block;font-style:normal;font-weight:800;color:var(--gold2)}
+.field input,.field select,.field textarea,.svc input{background:#0e0e10;border-color:#35353b;color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus,.svc input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,175,55,.14)}
+input::placeholder,textarea::placeholder{color:#6d695f}
+.btn{background:var(--card2);border-color:rgba(212,175,55,.5);color:var(--gold2);box-shadow:none}
+.btn.primary,.btn.ok{background:var(--goldg);border-color:var(--gold2);color:#14110a;box-shadow:0 9px 22px rgba(212,175,55,.25)}
+.btn.danger{background:#1d1211;border-color:#6b2a24;color:#ff8a7a}
+.summary{border-inline-start-color:var(--gold);background:linear-gradient(135deg,#1a1710,#151517)}
+.chip{background:transparent}
+.chip.pending{color:#d8d3c4;border-color:#55524a;background:#1c1c1f}
+.chip.confirmed{color:#5fd1a6;border-color:#245c47;background:#0f2019}
+.chip.rejected,.chip.cancelled,.chip.declined{color:#ff8a7a;border-color:#6b2a24;background:#1d1211}
+.chip.proposed{color:var(--gold2);border-color:#6b5817;background:#221c0b}
+.chip.past{color:#8a867c;border-color:#3a3a3f;background:#1a1a1c}
+.chip.vip{color:#14110a;background:var(--goldg);border-color:var(--gold2);font-weight:900}
+.nav{background:rgba(16,16,18,.95);border-color:rgba(212,175,55,.35);box-shadow:0 12px 35px rgba(0,0,0,.7)}
+.nav button{color:var(--steel)}
+.nav button[aria-selected=true]{background:var(--goldg);color:#14110a}
+.nav .bd{background:var(--gold);color:#14110a}.nav button[aria-selected=true] .bd{background:#14110a;color:var(--gold2)}
+.tl{border-color:var(--line)}.slot{border-bottom-color:#232327}.slot .tm{color:var(--steel)}
+.free{color:#625e55}.free:hover{background:#1c1c1f}
+.bk,.cont{border-color:#8a867c;background:#1e1e22;color:var(--ink)}
+.bk.confirmed,.cont.confirmed{border-color:var(--ok);background:#0f221b}
+.bk.proposed,.cont.proposed{border-color:var(--gold);background:#221c0b}
+.bk.past,.cont.past{border-color:#4a4a50;background:#18181b}.bk.past b,.bk.past span{color:#77736a}
+.bk span{color:var(--steel)}
+.blk{background:repeating-linear-gradient(-45deg,#141416 0 8px,#1a1a1d 8px 16px);color:#8a867c}.blk small{color:#6d695f}
+.tl.vip{border-color:var(--gold);background:linear-gradient(180deg,#1b1608,#141416 35%);box-shadow:0 0 0 1px rgba(212,175,55,.45),0 10px 30px rgba(212,175,55,.08)}
+.vipbar{margin:10px 0;padding:9px 13px;border:1px solid var(--gold);border-radius:13px;background:linear-gradient(135deg,#2c2411,#171309);color:var(--gold2);font-weight:800}
+.rcpt{border-color:#3b3b41}
+.days7 input{accent-color:var(--gold)}
+.svc .x{background:#1d1211;border-color:#6b2a24;color:#ff8a7a}
+.warn{background:#1d1211;border-color:#6b2a24}
+.setgrp,.foot{border-color:var(--line)}
+dialog{background:#141416;color:var(--ink);border:1px solid rgba(212,175,55,.4)}
+dialog::backdrop{background:rgba(0,0,0,.78)}
+#toast{background:#1c1c1f;color:var(--gold2);border:1px solid rgba(212,175,55,.45)}
+@media(min-width:381px){.svc{grid-template-columns:1fr 78px 104px 104px 44px}}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module">
+/* ---------- helpers ---------- */
+const FA='۰۱۲۳۴۵۶۷۸۹';
+const fa=s=>String(s).replace(/\d/g,d=>FA[d]);
+const en=s=>String(s).replace(/[۰-۹]/g,d=>FA.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
+const toMin=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+const fromMin=m=>`${pad(Math.floor(m/60))}:${pad(m%60)}`;
+const T=m=>fa(typeof m==='number'?fromMin(m):m);
+const mk=o=>new Intl.DateTimeFormat('fa-IR-u-ca-persian',o);
+const fWeekS=mk({weekday:'short'}),fDay=mk({day:'numeric'}),fMon=mk({month:'long'}),fFull=mk({weekday:'long',day:'numeric',month:'long'});
+const today=()=>iso(new Date());
+const price=p=>p?`${Number(p).toLocaleString('fa-IR')} تومان`:'';
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+const $app=document.getElementById('app'),$dlg=document.getElementById('dlg');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),2400)}
+const STATUS={pending:'در انتظار تأیید',confirmed:'تأیید شده',rejected:'رد شده',cancelled:'لغو شده',proposed:'پیشنهاد زمان جدید',declined:'پیشنهاد پذیرفته نشد'};
+const chip=s=>`<span class="chip ${s}">${STATUS[s]}</span>`;
+
+/* ---------- data ---------- */
+const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],vipDates:[],phone:'',address:''},
+ services:[{id:'s1',name:'کوتاهی مو',min:30,price:0},{id:'s2',name:'اصلاح ریش',min:30,price:0},{id:'s3',name:'کوتاهی مو و ریش',min:60,price:0},{id:'s4',name:'اصلاح صورت',min:30,price:0}],
+ bookings:[],cells:[]});
+let db=DEF();
+/* ---------- VIP helpers ---------- */
+const isVip=d=>Array.isArray(db.settings.vipDates)&&db.settings.vipDates.includes(d);
+const svcPrice=(x,d)=>(isVip(d)&&x&&x.vipPrice>0)?x.vipPrice:((x&&x.price)||0);
+const bookingVip=b=>b.vip!=null?!!b.vip:isVip(b.date);
+const bookingPrice=b=>b.price!=null?b.price:svcPrice(db.services.find(x=>x.id===b.sid),b.date);
+const vipChip=b=>bookingVip(b)?'<span class="chip vip">VIP</span>':'';
+const priceP=b=>bookingPrice(b)?`<p>هزینه: ${price(bookingPrice(b))}</p>`:'';
+function svcPriceHtml(x){
+ if(P.date&&isVip(P.date))return `<em class="vp">${price(svcPrice(x,P.date))||'نرخ VIP'}</em>`;
+ if(P.date)return price(x.price);
+ return price(x.price)+((x.vipPrice>0&&x.vipPrice!==x.price)?`<em class="vp">VIP: ${price(x.vipPrice)}</em>`:'');
+}
+function vipSection(){
+ const list=(db.settings.vipDates||[]).filter(d=>d>=today()).sort();
+ return `<div class="setgrp"><h2>روزهای VIP</h2><p class="hint">برای VIP کردن یک روز، در تب «تقویم» همان روز را باز کنید و دکمه «VIP کردن این روز» را بزنید. در روزهای VIP، قیمت VIP خدمات اعمال می‌شود.</p>`+
+ (list.length?list.map(d=>`<div class="item" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>${fFull.format(parse(d))}</b><span style="display:flex;gap:6px"><button class="btn sm" data-act="goday" data-d="${d}">دیدن</button><button class="btn sm danger" data-act="unvip" data-d="${d}">برداشتن</button></span></div>`).join(''):`<p class="empty">هنوز روز VIP تعریف نشده.</p>`)+`</div>`;
+}
+const LPK='rish-o-ghaichi:phone';
+const getLP=()=>{try{return localStorage.getItem(LPK)||''}catch(e){return ''}};
+const setLP=v=>{try{localStorage.setItem(LPK,v)}catch(e){}};
+
+/* ---------- backend (Supabase) ---------- */
+let ADMIN_EMAIL='',sb=null,session=null,appState='loading',lastErr='',shown=false,chan=null,pt=null;
+const myUid=()=>session&&session.user?session.user.id:'';
+const isAdminUser=()=>!!(session&&session.user&&!session.user.is_anonymous);
+const withTimeout=(p,ms=15000)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);
+const errText=e=>(e&&(e.message||e.code))||'error';
+function refresh(){
+ const a=document.activeElement;
+ if(shown&&appState==='ready'&&a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&!$dlg.contains(a))return;
+ const q='.days,.strip',sc=[...document.querySelectorAll(q)].map(e=>e.scrollLeft),y=window.scrollY;
+ render();
+ document.querySelectorAll(q).forEach((e,i)=>{if(sc[i]!=null)e.scrollLeft=sc[i]});
+ window.scrollTo(0,y);
+}
+async function loadAll(){
+ const admin=isAdminUser(),me=myUid();
+ const bq=admin?sb.from('bookings').select('*').gte('date',addDays(today(),-30)):sb.from('bookings').select('*').eq('uid',me);
+ const [c,k,b]=await Promise.all([sb.from('config').select('*').eq('id','main').maybeSingle(),sb.from('cells').select('*').gte('date',addDays(today(),-1)),bq]);
+ const err=c.error||k.error||b.error;if(err)throw err;
+ if(c.data){
+  db.settings=Object.assign(DEF().settings,c.data.settings||{});delete db.settings.pin;
+  if(!Array.isArray(db.settings.vipDates))db.settings.vipDates=[];
+  if(Array.isArray(c.data.services)&&c.data.services.length)db.services=c.data.services;
+ }else if(admin)saveCfg();
+ db.cells=k.data||[];db.bookings=b.data||[];
+}
+async function pull(){
+ if(!sb||!session)return;
+ try{await loadAll();if(appState!=='ready')appState='ready';refresh()}
+ catch(e){console.error(e);if(appState!=='ready'){appState='error';lastErr=errText(e);render()}}
+}
+const pullSoon=()=>{clearTimeout(pt);pt=setTimeout(pull,300)};
+function saveCfg(){
+ if(!sb||!isAdminUser())return;
+ sb.from('config').upsert({id:'main',settings:db.settings,services:db.services}).then(({error})=>{if(error)toast('ذخیره نشد. اتصال یا دسترسی را بررسی کنید.')});
+}
+const cellIds=(date,t,n)=>Array.from({length:n},(_,i)=>`${date}_${t+i*db.settings.slot}`);
+async function placeBooking(b){
+ const sl=db.settings.slot,t0=toMin(b.time);
+ const c=b.cells.map((id,i)=>({id,date:b.date,t:t0+i*sl}));
+ const {error}=await sb.rpc('place_booking',{b,c});
+ if(error)throw error;
+ await pull();
+}
+async function setBookingStatus(id,st){
+ const {error}=await sb.rpc('set_status',{p_id:id,p_status:st});
+ if(error){toast('انجام نشد. اتصال اینترنت را بررسی کنید.');return false}
+ await pull();return true;
+}
+const SB_SRC=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm','https://esm.sh/@supabase/supabase-js@2'];
+async function importSupabase(){let err;for(const u of SB_SRC){try{return await import(u)}catch(e){err=e}}throw err||new Error('cdn')}
+async function initBackend(){
+ let cfg;
+ try{cfg=(await import('./supabase-config.js')).SUPABASE_CONFIG}catch(e){}
+ if(!cfg||!cfg.url||!cfg.anonKey||/^YOUR_/.test(cfg.url)||/^YOUR_/.test(cfg.anonKey)){appState='noconfig';render();return}
+ ADMIN_EMAIL=(cfg.adminEmail&&!/^YOUR_/.test(cfg.adminEmail))?cfg.adminEmail:'';
+ try{
+  const {createClient}=await withTimeout(importSupabase(),20000);
+  sb=createClient(cfg.url,cfg.anonKey);
+  const g=await withTimeout(sb.auth.getSession());
+  session=g.data.session;
+  if(!session){const r=await withTimeout(sb.auth.signInAnonymously());if(r.error)throw r.error;session=r.data.session}
+  sb.auth.onAuthStateChange((ev,s)=>{
+   const prev=myUid();session=s;
+   setTimeout(async()=>{
+    if(!s){try{const r=await sb.auth.signInAnonymously();if(r.error)throw r.error}catch(e){appState='error';lastErr=errText(e);render()}return}
+    if(s.user.id!==prev){db.bookings=[];await pull();render()}
+   },0);
+  });
+  await withTimeout(loadAll());
+  appState='ready';render();
+  chan=sb.channel('rg-changes').on('postgres_changes',{event:'*',schema:'public'},pullSoon).subscribe();
+  setInterval(pullSoon,30000);
+ }catch(e){console.error(e);appState='error';lastErr=errText(e);render()}
+}
+function statusView(){
+ let m;
+ if(appState==='noconfig')m=`<h2>تنظیم Supabase</h2><p>اطلاعات پروژه Supabase هنوز وارد نشده. فایل <b dir="ltr">supabase-config.js</b> را باز کنید و آدرس و کلید را جایگزین کنید.</p>`;
+ else if(appState==='error')m=`<h2>اتصال برقرار نشد</h2><p>اینترنت را بررسی کنید و دوباره تلاش کنید. ممکن است Supabase بدون VPN در دسترس نباشد.</p>${lastErr?`<p class="hint" dir="ltr">${esc(lastErr)}</p>`:''}<button class="btn primary block" data-act="reload">تلاش دوباره</button>`;
+ else m=`<h2>در حال بارگذاری…</h2>`;
+ return head('آرایشگاه پیکاسو')+`<div class="wrap"><main><section>${m}</section></main></div>`;
+}
+const active=b=>b.status==='pending'||b.status==='confirmed'||b.status==='proposed';
+const isPast=b=>{const n=new Date(),t=today();if(b.date<t)return true;if(b.date>t)return false;return n.getHours()*60+n.getMinutes()>=toMin(b.time)+b.n*db.settings.slot};
+const nSlots=min=>Math.max(1,Math.ceil(min/db.settings.slot));
+
+/* ---------- availability ---------- */
+function blockMap(date){
+ const m={},s=db.settings,sl=s.slot;
+ for(const k of s.blocks){if(k.date!==date)continue;const f=toMin(k.from),e=toMin(k.to);
+  for(let t=toMin(s.start);t<toMin(s.end);t+=sl)if(t+sl>f&&t<e)m[t]=k}
+ return m;
+}
+function occupied(date){
+ const set=new Set();
+ for(const t in blockMap(date))set.add(+t);
+ for(const c of db.cells)if(c.date===date)set.add(c.t);
+ return set;
+}
+function isOpen(date){return !db.settings.daysOff.includes(parse(date).getDay())&&!db.settings.closedDates.includes(date)}
+function canFit(date,t,n){
+ if(!isOpen(date))return false;
+ const {start,end,slot}=db.settings;
+ if(t<toMin(start)||t+n*slot>toMin(end))return false;
+ const occ=occupied(date);
+ for(let i=0;i<n;i++)if(occ.has(t+i*slot))return false;
+ return true;
+}
+function freeStarts(date,n){
+ const {start,end,slot}=db.settings,now=new Date(),isToday=date===iso(now),nowM=now.getHours()*60+now.getMinutes(),out=[];
+ for(let t=toMin(start);t+n*slot<=toMin(end);t+=slot){if(isToday&&t<=nowM)continue;if(canFit(date,t,n))out.push(t)}
+ return out;
+}
+
+/* ---------- receipt & messages ---------- */
+const newCode=()=>String(10000+Math.floor(Math.random()*90000));
+const codeOf=b=>b.code||String(parseInt(b.id.slice(0,6),36)%90000+10000);
+let MSG={text:'',phone:''};
+function receiptText(b,kind){
+ const k=kind||b.status;
+ const title={pending:'رسید ثبت درخواست نوبت',confirmed:'تأیید نوبت',rejected:'رد درخواست نوبت',proposed:'پیشنهاد زمان جدید',cancelled:'لغو نوبت',declined:'پیشنهاد زمان جدید پذیرفته نشد'}[k]||'رسید نوبت';
+ let t=`ریش و قیچی | آرایشگاه پیکاسو\n${title}\nکد پیگیری: ${fa(codeOf(b))}\nنام: ${b.name}\nخدمت: ${b.sname}\n${k==='proposed'?'زمان پیشنهادی':'زمان'}: ${fFull.format(parse(b.date))}، ساعت ${T(b.time)}`;
+ if(k==='proposed'&&b.orig)t+=`\nزمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}`;
+ if(bookingVip(b))t+=`\nنوع نوبت: VIP`;if(bookingPrice(b))t+=`\nهزینه: ${price(bookingPrice(b))}`;
+ t+=`\nوضعیت: ${STATUS[k]}`;
+ if(k==='proposed')t+='\nبرای پذیرش یا رد پیشنهاد، بخش «نوبت‌های من» را ببینید یا با آرایشگاه تماس بگیرید.';
+ if(k==='pending'||k==='confirmed')t+=`\nلطفاً حتماً ${fa(5)} دقیقه قبل از زمان نوبت در آرایشگاه حضور داشته باشید.`;
+ if(k==='rejected')t+='\nبرای انتخاب زمان دیگر دوباره رزرو کنید.';
+ if(db.settings.phone)t+=`\nتلفن: ${fa(db.settings.phone)}`;
+ return t;
+}
+function copyText(t){
+ const done=()=>toast('کپی شد.');
+ const fb=()=>{const x=document.createElement('textarea');x.value=t;x.style.cssText='position:fixed;opacity:0';($dlg.open?$dlg:document.body).appendChild(x);x.select();try{document.execCommand('copy');done()}catch(e){toast('کپی نشد.')}x.remove()};
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(done,fb);else fb();
+}
+function showMsg(id,kind,admin){
+ const b=db.bookings.find(x=>x.id===id);if(!b)return;
+ const text=receiptText(b,kind);MSG={text,phone:b.phone||''};
+ openDlg(`<h3>${admin?'پیام به مشتری':'رسید نوبت'}</h3><div class="rcpt">${esc(text)}</div><div class="acts">${admin&&b.phone?`<button class="btn sm primary" data-act="sms">پیامک</button><button class="btn sm" data-act="wa">واتس‌اپ</button>`:''}${navigator.share?`<button class="btn sm ${admin&&b.phone?'':'primary'}" data-act="share">اشتراک‌گذاری</button>`:''}<button class="btn sm" data-act="copy">کپی متن</button><button class="btn sm" data-act="closedlg">بستن</button></div>`);
+}
+
+/* ---------- routing ---------- */
+const isAdminRoute=()=>location.hash.startsWith('#/admin');
+const isAuthed=()=>isAdminUser();
+function render(scrollTo){
+ if(appState!=='ready'){shown=false;$app.innerHTML=statusView();return}
+ shown=true;
+ if(isAdminRoute())renderAdmin();else renderPub();
+ if(scrollTo){const el=document.getElementById(scrollTo);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+}
+window.addEventListener('hashchange',()=>{window.scrollTo(0,0);render()});
+
+/* ---------- public ---------- */
+let P={tab:'book',sid:null,date:null,time:null,name:'',phone:'',note:'',done:null,lookup:null,lookInput:null};
+const head=(sub,exit)=>`<header class="top"><div class="wrap"><div class="brand"><h1>ریش و قیچی</h1><p>${sub}</p></div>${exit?'<button class="exit" data-act="logout">خروج</button>':(isAdminRoute()?'<a class="exit" href="#/">صفحه رزرو</a>':'<a class="exit" href="#/admin">ورود مدیر</a>')}</div></header>`;
+
+function renderPub(){
+ const body=P.done?doneView():(P.tab==='book'?bookView():mineView());
+ const s=db.settings;
+ $app.innerHTML=head('آرایشگاه پیکاسو')+`<div class="wrap"><nav class="seg" role="tablist"><button role="tab" aria-selected="${P.tab==='book'}" data-act="tab" data-tab="book">رزرو نوبت</button><button role="tab" aria-selected="${P.tab==='mine'}" data-act="tab" data-tab="mine">نوبت‌های من</button></nav><main>${body}
+ <div class="foot">${s.address?`<div>${esc(s.address)}</div>`:''}${s.phone?`<div>تلفن: <a href="tel:${esc(s.phone)}">${esc(fa(s.phone))}</a></div>`:''}</div></main></div>`;
+}
+
+function bookView(){
+ const svc=db.services.find(x=>x.id===P.sid);
+ let h=`<section id="s1"><h2><span class="n">${fa(1)}</span>چه کاری می‌خواهید؟</h2><div class="rows">`+
+ db.services.map(x=>`<button class="row ${P.sid===x.id?'on':''}" data-act="svc" data-id="${x.id}"><span class="t">${esc(x.name)}</span><span class="m"><b>${fa(x.min)} دقیقه</b>${svcPriceHtml(x)}</span></button>`).join('')+`</div></section>`;
+ if(!svc)return h;
+ const n=nSlots(svc.min);
+ h+=`<section id="s2"><h2><span class="n">${fa(2)}</span>کدام روز؟</h2><div class="days">`;
+ for(let i=0;i<db.settings.horizon;i++){
+  const d=addDays(today(),i),dt=parse(d),open=isOpen(d),free=open?freeStarts(d,n).length:0;
+  const vip=isVip(d),label=!open?'تعطیل':(free===0?'پر':(vip?'VIP':''));
+  h+=`<button class="day ${P.date===d?'on':''}${vip&&open?' vip':''}" ${free===0?'disabled':''} data-act="day" data-d="${d}"><span class="w">${fWeekS.format(dt)}</span><span class="d">${fa(fDay.format(dt))}</span><span class="mo">${fMon.format(dt)}</span><span class="s">${label}</span></button>`;
+ }
+ h+=`</div></section>`;
+ if(!P.date)return h;
+ const slots=freeStarts(P.date,n);
+ h+=`<section id="s3"><h2><span class="n">${fa(3)}</span>چه ساعتی؟</h2><p class="hint">ساعت‌های خالی ${fFull.format(parse(P.date))}</p>${isVip(P.date)?'<div class="vipbar">این روز، روز VIP است و قیمت‌ها طبق نرخ VIP محاسبه می‌شود.</div>':''}`;
+ h+=slots.length?`<div class="times">${slots.map(t=>`<button class="time ${P.time===t?'on':''}" data-act="time" data-t="${t}">${T(t)}</button>`).join('')}</div>`:`<p class="empty">این روز ساعت خالی ندارد. روز دیگری انتخاب کنید.</p>`;
+ h+=`</section>`;
+ if(P.time==null)return h;
+ h+=`<section id="s4"><h2><span class="n">${fa(4)}</span>مشخصات شما</h2>
+ <div class="summary"><b>${esc(svc.name)}</b><br>${fFull.format(parse(P.date))}، ساعت ${T(P.time)}${isVip(P.date)?' <span class="chip vip">VIP</span>':''}${svcPrice(svc,P.date)?`<br>هزینه: <b>${price(svcPrice(svc,P.date))}</b>`:''}</div>
+ <label class="field"><span>نام و نام خانوادگی</span><input id="f-name" autocomplete="name" value="${esc(P.name)}"></label>
+ <label class="field"><span>شماره موبایل</span><input id="f-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="۰۹۱۲۳۴۵۶۷۸۹" value="${esc(P.phone||getLP())}"></label>
+ <label class="field"><span>توضیحات (اختیاری)</span><textarea id="f-note">${esc(P.note)}</textarea></label>
+ <button class="btn primary block" data-act="submit">ارسال درخواست نوبت</button>
+ <p class="hint">نوبت بعد از تأیید آرایشگاه قطعی می‌شود.</p></section>`;
+ return h;
+}
+
+function doneView(){
+ const b=P.done;MSG={text:receiptText(b,'pending'),phone:b.phone};
+ return `<section><h2>درخواست شما ثبت شد</h2><div class="rcpt">${esc(MSG.text)}</div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">${navigator.share?`<button class="btn sm primary" data-act="share">اشتراک‌گذاری رسید</button>`:''}<button class="btn sm" data-act="copy">کپی رسید</button></div>
+ <p>بعد از تأیید آرایشگاه، وضعیت نوبت در بخش «نوبت‌های من» تأیید شده می‌شود.</p>
+ <div style="display:flex;gap:8px"><button class="btn" data-act="tab" data-tab="mine">نوبت‌های من</button><button class="btn primary" data-act="newbook">نوبت جدید</button></div></section>`;
+}
+
+function mineView(){
+ const list=db.bookings.filter(b=>b.uid===myUid()).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
+ let h=`<section><h2>نوبت‌های من</h2><p class="hint">نوبت‌هایی که با همین دستگاه ثبت کرده‌اید. اگر از دستگاه دیگری رزرو کرده‌اید، با آرایشگاه تماس بگیرید.</p>`;
+  h+=`<div style="margin-top:18px">`+(list.length?list.map(b=>{
+   const future=(b.date+' '+b.time)>=(today()+' '+fromMin(new Date().getHours()*60+new Date().getMinutes()));
+   return `<div class="item"><div class="hd"><b>${esc(b.sname)} ${vipChip(b)}</b>${chip(b.status)}</div><p>${b.status==='proposed'?'زمان پیشنهادی: ':''}${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.status==='proposed'&&b.orig?`<p>زمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}${priceP(b)}<div class="acts">${b.status==='proposed'?`<button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">پذیرفتن زمان جدید</button><button class="btn sm danger" data-act="declineprop" data-id="${b.id}">نمی‌پذیرم</button>`:(active(b)&&future?`<button class="btn sm danger" data-act="mycancel" data-id="${b.id}">لغو نوبت</button>`:'')}<button class="btn sm" data-act="receipt" data-id="${b.id}">رسید</button></div></div>`}).join(''):`<p class="empty">نوبتی با این شماره پیدا نشد.</p>`)+`</div>`;
+ return h+`</section>`;
+}
+
+let sending=false;
+async function submitBooking(){
+ if(sending)return;
+ const svc=db.services.find(x=>x.id===P.sid);if(!svc)return;
+ const name=P.name.trim(),phone=en(P.phone||getLP()||'').replace(/[\s-]/g,'');
+ if(name.length<2)return toast('نام خود را وارد کنید.');
+ if(!/^09\d{9}$/.test(phone))return toast('شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود.');
+ const n=nSlots(svc.min);
+ if(!freeStarts(P.date,n).includes(P.time)){P.time=null;render('s3');return toast('این ساعت دیگر خالی نیست. ساعت دیگری انتخاب کنید.')}
+ if(!myUid())return toast('اتصال برقرار نیست. چند لحظه بعد دوباره تلاش کنید.');
+ const b={id:uid(),date:P.date,time:fromMin(P.time),sid:svc.id,sname:svc.name,n,name,phone,note:P.note.trim(),code:newCode(),price:svcPrice(svc,P.date),vip:isVip(P.date),status:'pending',created:Date.now(),uid:myUid(),cells:cellIds(P.date,P.time,n)};
+ sending=true;
+ try{await withTimeout(placeBooking(b))}
+ catch(err){
+  sending=false;P.time=null;await pull();render('s3');
+  return toast(err&&err.message==='timeout'?'پاسخی از سرور نرسید. قبل از تلاش دوباره، بخش «نوبت‌های من» را ببینید.':'ثبت نشد؛ شاید این ساعت همین الان رزرو شد. ساعت دیگری انتخاب کنید.');
+ }
+ sending=false;setLP(phone);
+ P.done=b;P.sid=P.date=P.time=null;P.note='';
+ render();window.scrollTo(0,0);
+}
+
+/* ---------- admin ---------- */
+let A={tab:'req',date:today(),stripStart:today()};
+function renderAdmin(){
+ if(!isAuthed()){
+  $app.innerHTML=head('ورود مدیر')+`<div class="wrap"><main><section><h2>ورود مدیر</h2><form id="login">${ADMIN_EMAIL?'':'<label class="field"><span>ایمیل</span><input id="em" type="email" dir="ltr" autocomplete="username" autocapitalize="none"></label>'}<label class="field"><span>رمز ۶ رقمی</span><input id="pin" type="password" inputmode="numeric" maxlength="6" dir="ltr" autocomplete="current-password" placeholder="••••••" style="text-align:center;letter-spacing:.5em;font-size:1.4rem"></label><button class="btn primary block" type="submit">ورود</button></form><div class="foot"><a href="#/">بازگشت به صفحه رزرو</a></div></section></main></div>`;
+  return;
+ }
+ const pend=db.bookings.filter(b=>b.status==='pending').length;
+ const body=A.tab==='req'?reqView():A.tab==='cal'?calView():setView();
+ $app.innerHTML=head('پنل مدیریت',true)+`<div class="wrap adm"><main>${body}</main></div>
+ <nav class="nav" role="tablist"><button role="tab" aria-selected="${A.tab==='req'}" data-act="atab" data-tab="req">درخواست‌ها${pend?`<span class="bd">${fa(pend)}</span>`:''}</button><button role="tab" aria-selected="${A.tab==='cal'}" data-act="atab" data-tab="cal">تقویم</button><button role="tab" aria-selected="${A.tab==='set'}" data-act="atab" data-tab="set">تنظیمات</button></nav>`;
+}
+
+function reqView(){
+ const list=db.bookings.filter(b=>b.status==='pending').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ let h=`<h2>درخواست‌های جدید</h2>`;
+ h+=list.length?list.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)} ${vipChip(b)}</b><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a></div>
+  <p>${esc(b.sname)}${bookingPrice(b)?' · '+price(bookingPrice(b)):''}</p><p>${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.note?`<p>توضیحات: ${esc(b.note)}</p>`:''}
+  <div class="acts"><button class="btn sm ok" data-act="approve" data-id="${b.id}">تأیید</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button><button class="btn sm" data-act="goday" data-d="${b.date}">دیدن در تقویم</button></div></div>`).join(''):`<p class="empty">درخواست جدیدی نیست.</p>`;
+ const prop=db.bookings.filter(b=>b.status==='proposed').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ if(prop.length)h+=`<h2 style="margin-top:30px">منتظر پاسخ مشتری</h2>`+prop.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)}</b>${chip('proposed')}</div><p>زمان پیشنهادی: ${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.orig?`<p>زمان درخواستی: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}
+  <div class="acts"><button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">مشتری پذیرفت</button><button class="btn sm" data-act="notify" data-id="${b.id}">پیام به مشتری</button><button class="btn sm danger" data-act="admcancel" data-id="${b.id}">لغو پیشنهاد</button></div></div>`).join('');
+ return h;
+}
+
+function calView(){
+ const s=db.settings,sl=s.slot,d=A.date,dt=parse(d);
+ if(d<A.stripStart)A.stripStart=d;
+ if(d>addDays(A.stripStart,13))A.stripStart=addDays(d,-13);
+ const counts={};db.bookings.forEach(b=>{if(active(b))counts[b.date]=(counts[b.date]||0)+1});
+ let h=`<div class="dnav"><button class="btn sm" data-act="shift" data-n="1" aria-label="روز بعد">روز بعد</button><h2>${fFull.format(dt)}</h2><button class="btn sm" data-act="shift" data-n="-1" aria-label="روز قبل">روز قبل</button></div><div class="strip">`;
+ for(let i=0;i<14;i++){const x=addDays(A.stripStart,i),xd=parse(x);
+  h+=`<button class="day ${x===d?'on':''}${isVip(x)?' vip':''}" data-act="goday" data-d="${x}"><span class="w">${fWeekS.format(xd)}</span><span class="d">${fa(fDay.format(xd))}</span><span class="cnt">${counts[x]?fa(counts[x]):(isVip(x)?'VIP':'')}</span></button>`}
+ h+=`</div><div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">${d!==today()?`<button class="btn sm" data-act="goday" data-d="${today()}">امروز</button>`:''}`;
+ const weekly=s.daysOff.includes(dt.getDay()),closed=s.closedDates.includes(d);
+ if(!weekly)h+=`<button class="btn sm ${closed?'':'danger'}" data-act="toggleday">${closed?'باز کردن این روز':'تعطیل کردن این روز'}</button>`;
+ if(!weekly&&!closed)h+=`<button class="btn sm primary" data-act="togglevip">${isVip(d)?'برداشتن VIP از این روز':'VIP کردن این روز'}</button>`;
+if(!weekly&&!closed)h+=`<button class="btn sm" data-act="blockhours">بستن ساعتی یا نیم‌روز</button>`;
+ h+=`</div>`;
+ if(isVip(d)&&isOpen(d))h+=`<div class="vipbar">روز VIP — نوبت‌های این روز با نرخ VIP ثبت می‌شوند.</div>`;
+if(!isOpen(d))return h+`<p class="empty">${weekly?'این روز تعطیل هفتگی است.':'این روز تعطیل شده است.'}</p>`;
+ const map={},bm=blockMap(d);
+ db.bookings.forEach(b=>{if(b.date!==d||!active(b))return;const t=toMin(b.time);for(let i=0;i<b.n;i++)map[t+i*sl]={b,first:i===0}});
+ h+=`<div class="tl${isVip(d)?' vip':''}">`;
+ for(let t=toMin(s.start);t<toMin(s.end);t+=sl){
+  const m=map[t];let cell;
+  if(!m)cell=bm[t]?`<button class="blk" data-act="unblock" data-id="${bm[t].id}">بسته${bm[t].note?` (${esc(bm[t].note)})`:''}<small>برای برداشتن لمس کنید</small></button>`:`<button class="free" data-act="addslot" data-t="${t}">خالی</button>`;
+  else if(m.first)cell=`<button class="bk ${m.b.status}${isPast(m.b)?' past':''}" data-act="bk" data-id="${m.b.id}"><b>${esc(m.b.name)}${bookingVip(m.b)?' <span class="chip vip">VIP</span>':''}</b><span>${esc(m.b.sname)}</span> ${m.b.status!=='confirmed'?chip(m.b.status):''}${isPast(m.b)?'<span class="chip past">زمان گذشته</span>':''}</button>`;
+  else cell=`<div class="cont ${m.b.status}${isPast(m.b)?' past':''}"></div>`;
+  h+=`<div class="slot"><div class="tm">${T(t)}</div><div>${cell}</div></div>`;
+ }
+ return h+`</div>`;
+}
+
+function setView(){
+ const s=db.settings;
+ const dn=[['شنبه',6],['یکشنبه',0],['دوشنبه',1],['سه‌شنبه',2],['چهارشنبه',3],['پنجشنبه',4],['جمعه',5]];
+ return `<div class="setgrp" style="border-top:0;margin-top:0"><h2>ساعت کار</h2>
+ <div class="two"><label class="field"><span>شروع</span><input type="time" data-set="start" value="${s.start}"></label><label class="field"><span>پایان</span><input type="time" data-set="end" value="${s.end}"></label></div>
+ <div class="two"><label class="field"><span>طول هر نوبت (دقیقه)</span><select data-set="slot">${[15,20,30,45,60].map(v=>`<option value="${v}" ${s.slot===v?'selected':''}>${fa(v)}</option>`).join('')}</select></label>
+ <label class="field"><span>مشتری تا چند روز بعد رزرو کند</span><select data-set="horizon">${[7,14,21,30].map(v=>`<option value="${v}" ${s.horizon===v?'selected':''}>${fa(v)} روز</option>`).join('')}</select></label></div>
+ <span style="font-weight:600;display:block;margin-bottom:6px">تعطیلی هفتگی</span><div class="days7">${dn.map(([n,v])=>`<label><input type="checkbox" data-day="${v}" ${s.daysOff.includes(v)?'checked':''}>${n}</label>`).join('')}</div></div>
+ <div class="setgrp"><h2>خدمات</h2><p class="hint">قیمت‌ها به تومان. اگر «قیمت VIP» خالی باشد، در روز VIP همان قیمت عادی اعمال می‌شود.</p>${db.services.map(x=>`<div class="svc"><input class="nm" data-svc="${x.id}" data-f="name" value="${esc(x.name)}" aria-label="نام خدمت"><input data-svc="${x.id}" data-f="min" type="number" inputmode="numeric" min="5" step="5" value="${x.min}" aria-label="مدت (دقیقه)"><input data-svc="${x.id}" data-f="price" type="number" inputmode="numeric" min="0" value="${x.price||''}" placeholder="قیمت عادی" aria-label="قیمت عادی به تومان"><input data-svc="${x.id}" data-f="vipPrice" type="number" inputmode="numeric" min="0" value="${x.vipPrice||''}" placeholder="قیمت VIP" aria-label="قیمت VIP به تومان"><button class="x" data-act="delsvc" data-id="${x.id}" aria-label="حذف خدمت">حذف</button></div>`).join('')}
+ <button class="btn block" data-act="addsvc">افزودن خدمت</button></div>
+ ${vipSection()}
+ <div class="setgrp"><h2>اطلاعات تماس (نمایش در صفحه مشتری)</h2>
+ <label class="field"><span>تلفن</span><input type="tel" data-set="phone" value="${esc(s.phone)}"></label>
+ <label class="field"><span>آدرس</span><input data-set="address" value="${esc(s.address)}"></label></div>
+ <div class="setgrp"><h2>رمز ۶ رقمی مدیر</h2>
+ <label class="field"><span>رمز جدید (۶ رقم)</span><input id="newpin" type="password" inputmode="numeric" maxlength="6" dir="ltr" autocomplete="new-password"></label><button class="btn block" data-act="setpin">ذخیره رمز</button></div>
+ <div class="setgrp"><h2>پشتیبان‌گیری</h2><p class="hint">اطلاعات روی Supabase ذخیره می‌شود. فایل پشتیبان شامل تنظیمات، خدمات و نوبت‌های ۳۰ روز اخیر است و بازیابی فقط تنظیمات و خدمات را برمی‌گرداند.</p>
+ <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="export">دانلود پشتیبان</button><label class="btn" style="cursor:pointer">بازیابی تنظیمات از فایل<input type="file" id="imp" accept="application/json" hidden></label></div></div>`;
+}
+
+/* ---------- dialogs ---------- */
+function openDlg(html){$dlg.innerHTML=html;if(!$dlg.open)$dlg.showModal()}
+function closeDlg(){if($dlg.open)$dlg.close()}
+$dlg.addEventListener('click',e=>{if(e.target===$dlg)closeDlg()});
+function showBooking(id){
+ const b=db.bookings.find(x=>x.id===id);if(!b)return;
+ openDlg(`<h3>${esc(b.name)}</h3><p style="margin:0">${esc(b.sname)}${bookingPrice(b)?' · '+price(bookingPrice(b)):''} ${vipChip(b)}</p><p style="margin:0">${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>
+ <p style="margin:6px 0"><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a> ${chip(b.status)}</p>${b.note?`<p style="margin:0">توضیحات: ${esc(b.note)}</p>`:''}
+ <div class="acts">${b.status==='pending'?`<button class="btn sm ok" data-act="approve" data-id="${b.id}">تأیید</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button>`:`<button class="btn sm danger" data-act="admcancel" data-id="${b.id}">${b.status==='proposed'?'لغو پیشنهاد':'لغو نوبت'}</button><button class="btn sm" data-act="notify" data-id="${b.id}">پیام به مشتری</button>`}<button class="btn sm" data-act="closedlg">بستن</button></div>`);
+}
+function showAdd(t){
+ openDlg(`<h3>افزودن نوبت ساعت ${T(t)}</h3><p class="hint" style="margin-top:0">برای مشتری حضوری یا تلفنی. نوبت بلافاصله تأیید می‌شود.</p>
+ <label class="field"><span>نام مشتری</span><input id="a-name"></label>
+ <label class="field"><span>موبایل (اختیاری)</span><input id="a-phone" type="tel" inputmode="numeric"></label>
+ <label class="field"><span>خدمت</span><select id="a-svc">${db.services.map(x=>`<option value="${x.id}">${esc(x.name)} (${fa(x.min)} دقیقه)</option>`).join('')}</select></label>
+ <div class="acts"><button class="btn sm primary" data-act="saveadd" data-t="${t}">ثبت نوبت</button><button class="btn sm" data-act="blockhere" data-t="${t}">بستن این ساعت</button><button class="btn sm" data-act="closedlg">بستن</button></div>`);
+ document.getElementById('a-name').focus();
+}
+
+let R=null;
+function showReject(id,keep){
+ const b=db.bookings.find(x=>x.id===id);if(!b)return;
+ if(!keep||!R||R.id!==id)R={id,date:null,time:null,propose:false};
+ let h=`<h3>رد درخواست ${esc(b.name)}</h3><p style="margin:0">${esc(b.sname)}</p><p style="margin:0 0 6px">${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>`;
+ if(!R.propose){
+  h+=`<div class="acts"><button class="btn sm danger" data-act="doreject" data-id="${id}">رد بدون پیشنهاد</button><button class="btn sm primary" data-act="goprop" data-id="${id}">پیشنهاد زمان دیگر</button><button class="btn sm" data-act="closedlg">بستن</button></div>`;
+ }else{
+  h+=`<p class="hint">یک زمان خالی برای پیشنهاد انتخاب کنید.</p><div class="days">`;
+  for(let i=0;i<db.settings.horizon;i++){const d=addDays(today(),i),dt=parse(d),free=freeStarts(d,b.n).length;
+   h+=`<button class="day ${R.date===d?'on':''}" ${free?'':'disabled'} data-act="rday" data-d="${d}"><span class="w">${fWeekS.format(dt)}</span><span class="d">${fa(fDay.format(dt))}</span><span class="mo">${fMon.format(dt)}</span></button>`}
+  h+=`</div>`;
+  if(R.date){const sl=freeStarts(R.date,b.n);h+=sl.length?`<div class="times">${sl.map(t=>`<button class="time ${R.time===t?'on':''}" data-act="rtime" data-t="${t}">${T(t)}</button>`).join('')}</div>`:'<p class="empty">ساعت خالی ندارد.</p>'}
+  h+=`<div class="acts"><button class="btn sm primary" data-act="doprop" data-id="${id}" ${R.time==null?'disabled':''}>ارسال پیشنهاد</button><button class="btn sm" data-act="rback" data-id="${id}">برگشت</button></div>`;
+ }
+ openDlg(h);
+}
+function showBlock(f,t){
+ const s=db.settings,sl=s.slot,s0=toMin(s.start),e0=toMin(s.end);
+ let fo='',to='';
+ for(let x=s0;x<e0;x+=sl)fo+=`<option value="${x}" ${x===f?'selected':''}>${T(x)}</option>`;
+ for(let x=s0+sl;x<=e0;x+=sl)to+=`<option value="${x}" ${x===t?'selected':''}>${T(x)}</option>`;
+ openDlg(`<h3>بستن ساعتی یا نیم‌روز</h3><p class="hint" style="margin-top:0">${fFull.format(parse(A.date))}</p>
+ <div class="acts" style="margin:0 0 12px"><button class="btn sm" data-act="blkpre" data-p="m">نیمه اول روز</button><button class="btn sm" data-act="blkpre" data-p="a">نیمه دوم روز</button></div>
+ <div class="two"><label class="field"><span>از ساعت</span><select id="b-from">${fo}</select></label><label class="field"><span>تا ساعت</span><select id="b-to">${to}</select></label></div>
+ <label class="field"><span>دلیل (اختیاری)</span><input id="b-note"></label>
+ <div class="acts"><button class="btn sm primary" data-act="saveblk">ثبت</button><button class="btn sm" data-act="closedlg">بستن</button></div>`);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-act]');if(!el)return;
+ const a=el.dataset.act,id=el.dataset.id;
+ const setStatus=async(st,msg)=>{if(await setBookingStatus(id,st)){closeDlg();render();toast(msg);return true}return false};
+ switch(a){
+  /* public */
+  case'tab':P.tab=el.dataset.tab;P.done=null;render();window.scrollTo(0,0);break;
+  case'newbook':P.done=null;P.tab='book';render();window.scrollTo(0,0);break;
+  case'svc':P.sid=id;P.date=null;P.time=null;render('s2');break;
+  case'day':P.date=el.dataset.d;P.time=null;render('s3');break;
+  case'time':P.time=+el.dataset.t;render('s4');break;
+  case'submit':submitBooking();break;
+  case'reload':location.reload();break;
+  case'mycancel':if(confirm('این نوبت لغو شود؟'))setStatus('cancelled','نوبت لغو شد.');break;
+  /* admin */
+  case'logout':sb.auth.signOut().catch(()=>{});location.hash='#/';break;
+  case'atab':A.tab=el.dataset.tab;render();window.scrollTo(0,0);break;
+  case'approve':setBookingStatus(id,'confirmed').then(ok=>{if(ok){closeDlg();render();toast('نوبت تأیید شد.');showMsg(id,'confirmed',true)}});break;
+  case'reject':showReject(id);break;
+  case'admcancel':if(confirm('این نوبت لغو شود؟'))setStatus('cancelled','نوبت لغو شد.').then(ok=>{if(ok)showMsg(id,'cancelled',true)});break;
+  case'goday':A.date=el.dataset.d;A.tab='cal';render();window.scrollTo(0,0);break;
+  case'shift':A.date=addDays(A.date,+el.dataset.n);render();break;
+  case'toggleday':{const cl=db.settings.closedDates,i=cl.indexOf(A.date);
+   if(i>=0)cl.splice(i,1);else{const has=db.bookings.some(b=>b.date===A.date&&active(b));if(has&&!confirm('در این روز نوبت ثبت شده است. باز هم تعطیل شود؟'))break;cl.push(A.date)}
+   saveCfg();render()}break;
+  case'togglevip':{const v=db.settings.vipDates,i=v.indexOf(A.date);if(i>=0)v.splice(i,1);else v.push(A.date);saveCfg();render();toast(i>=0?'VIP این روز برداشته شد.':'این روز VIP شد.')}break;
+  case'unvip':{db.settings.vipDates=db.settings.vipDates.filter(x=>x!==el.dataset.d);saveCfg();render();toast('VIP برداشته شد.')}break;
+  case'bk':showBooking(id);break;
+  case'addslot':showAdd(+el.dataset.t);break;
+  case'closedlg':closeDlg();break;
+  case'receipt':showMsg(id,undefined,false);break;
+  case'notify':showMsg(id,undefined,true);break;
+  case'share':if(navigator.share)navigator.share({text:MSG.text}).catch(()=>{});else copyText(MSG.text);break;
+  case'copy':copyText(MSG.text);break;
+  case'sms':location.href=`sms:${MSG.phone}?&body=${encodeURIComponent(MSG.text)}`;break;
+  case'wa':window.open(`https://wa.me/98${MSG.phone.replace(/^0/,'')}?text=${encodeURIComponent(MSG.text)}`,'_blank');break;
+  case'acceptprop':setStatus('confirmed','نوبت جدید تأیید شد.');break;
+  case'declineprop':if(confirm('این پیشنهاد را نمی‌پذیرید؟'))setStatus('declined','پیشنهاد رد شد.');break;
+  case'doreject':setBookingStatus(id,'rejected').then(ok=>{if(ok){closeDlg();render();toast('درخواست رد شد.');showMsg(id,'rejected',true)}});break;
+  case'goprop':R.propose=true;showReject(id,true);break;
+  case'rback':R.propose=false;showReject(id,true);break;
+  case'rday':R.date=el.dataset.d;R.time=null;showReject(R.id,true);break;
+  case'rtime':R.time=+el.dataset.t;showReject(R.id,true);break;
+  case'doprop':{const b=db.bookings.find(x=>x.id===id);if(!b||!R||R.time==null)break;
+   if(!freeStarts(R.date,b.n).includes(R.time)){toast('این زمان دیگر خالی نیست.');showReject(id,true);break}
+   const rd=R.date,rt=R.time,sl=db.settings.slot,c=cellIds(rd,rt,b.n).map((cid,i)=>({id:cid,date:rd,t:rt+i*sl}));
+   sb.rpc('propose_booking',{p_id:id,p_date:rd,p_time:fromMin(rt),c}).then(async({error})=>{if(error)return toast('ثبت پیشنهاد انجام نشد.');await pull();closeDlg();render();toast('پیشنهاد ثبت شد.');showMsg(id,'proposed',true)})}break;
+  case'blockhours':showBlock(toMin(db.settings.start),Math.min(toMin(db.settings.start)+2*db.settings.slot,toMin(db.settings.end)));break;
+  case'blockhere':showBlock(+el.dataset.t,Math.min(+el.dataset.t+db.settings.slot,toMin(db.settings.end)));break;
+  case'blkpre':{const s0=toMin(db.settings.start),e0=toMin(db.settings.end),sl=db.settings.slot,mid=s0+Math.round((e0-s0)/2/sl)*sl;
+   const f=document.getElementById('b-from'),t=document.getElementById('b-to');
+   if(el.dataset.p==='m'){f.value=s0;t.value=mid}else{f.value=mid;t.value=e0}}break;
+  case'saveblk':{const f=+document.getElementById('b-from').value,e=+document.getElementById('b-to').value;
+   if(e<=f)return toast('ساعت پایان باید بعد از شروع باشد.');
+   const sl=db.settings.slot,ov=db.bookings.filter(b=>b.date===A.date&&active(b)&&toMin(b.time)<e&&toMin(b.time)+b.n*sl>f).length;
+   if(ov&&!confirm(`${fa(ov)} نوبت در این بازه ثبت شده و خودکار لغو نمی‌شود. باز هم بسته شود؟`))break;
+   db.settings.blocks.push({id:uid(),date:A.date,from:fromMin(f),to:fromMin(e),note:document.getElementById('b-note').value.trim()});saveCfg();closeDlg();render();toast('بازه بسته شد.')}break;
+  case'unblock':if(confirm('بسته بودن این بازه برداشته شود؟')){db.settings.blocks=db.settings.blocks.filter(k=>k.id!==id);saveCfg();render()}break;
+  case'saveadd':{const name=document.getElementById('a-name').value.trim();if(!name)return toast('نام مشتری را وارد کنید.');
+   const phone=en(document.getElementById('a-phone').value).replace(/[\s-]/g,''),svc=db.services.find(x=>x.id===document.getElementById('a-svc').value),n=nSlots(svc.min),t=+el.dataset.t;
+   if(!canFit(A.date,t,n))return toast('این ساعت برای این خدمت کافی نیست.');
+   placeBooking({id:uid(),date:A.date,time:fromMin(t),sid:svc.id,sname:svc.name,n,name,phone,note:'',code:newCode(),price:svcPrice(svc,A.date),vip:isVip(A.date),status:'confirmed',created:Date.now(),uid:myUid(),cells:cellIds(A.date,t,n)}).then(()=>{closeDlg();render();toast('نوبت ثبت شد.')}).catch(()=>toast('ثبت نشد. شاید این ساعت پر شده یا اتصال قطع است.'))}break;
+  case'addsvc':db.services.push({id:uid(),name:'خدمت جدید',min:30,price:0});saveCfg();render();break;
+  case'delsvc':if(db.services.length<2)return toast('حداقل یک خدمت باید بماند.');if(confirm('این خدمت حذف شود؟ نوبت‌های قبلی تغییر نمی‌کنند.')){db.services=db.services.filter(x=>x.id!==id);saveCfg();render()}break;
+  case'setpin':{const v=en(document.getElementById('newpin').value).trim();if(!/^\d{6}$/.test(v))return toast('رمز باید دقیقاً ۶ رقم باشد.');
+   sb.auth.updateUser({password:v}).then(({error})=>{if(error)return toast('تغییر رمز انجام نشد.');document.getElementById('newpin').value='';toast('رمز تغییر کرد.')})}break;
+  case'export':{const blob=new Blob([JSON.stringify({settings:db.settings,services:db.services,bookings:db.bookings},null,1)],{type:'application/json'}),u=URL.createObjectURL(blob),l=document.createElement('a');l.href=u;l.download=`rish-o-ghaichi-${today()}.json`;l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}break;
+ }
+});
+let loggingIn=false;
+async function doLogin(){
+ if(loggingIn||!sb)return;
+ const FK='rg:fails',now=Date.now();let f={n:0,until:0};
+ try{f=JSON.parse(localStorage.getItem(FK))||f}catch(e){}
+ if(f.until>now)return toast(`چند بار رمز اشتباه زده شد. ${fa(Math.ceil((f.until-now)/60000))} دقیقه دیگر تلاش کنید.`);
+ const emEl=document.getElementById('em'),email=ADMIN_EMAIL||(emEl?emEl.value.trim():''),pw=en(document.getElementById('pin').value).trim();
+ if(!email||!pw)return toast('رمز را وارد کنید.');
+ loggingIn=true;
+ const {error}=await sb.auth.signInWithPassword({email,password:pw});
+ loggingIn=false;
+ if(error){
+  f.n=(f.n||0)+1;if(f.n>=5){f={n:0,until:Date.now()+5*60000}}
+  try{localStorage.setItem(FK,JSON.stringify(f))}catch(e){}
+  const pinEl=document.getElementById('pin');if(pinEl)pinEl.value='';
+  return toast(/network|fetch/i.test(error.message||'')?'اتصال اینترنت برقرار نیست.':/rate|too many/i.test(error.message||'')?'تلاش‌های زیاد؛ کمی بعد دوباره امتحان کنید.':'رمز اشتباه است.');
+ }
+ try{localStorage.removeItem(FK)}catch(e){}
+ const g=await sb.auth.getSession();session=g.data.session;
+ if(document.activeElement)document.activeElement.blur();
+ await pull();render();
+}
+document.addEventListener('submit',e=>{
+ if(e.target.id!=='login')return;e.preventDefault();doLogin();
+});
+document.addEventListener('input',e=>{
+ const id=e.target.id;
+ if(id==='f-name')P.name=e.target.value;
+ else if(id==='f-phone')P.phone=e.target.value;
+ else if(id==='f-note')P.note=e.target.value;
+ else if(id==='f-look')P.lookInput=e.target.value;
+ else if(id==='pin'&&en(e.target.value).trim().length>=6)doLogin();
+});
+document.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.dataset.set){
+  const k=t.dataset.set;let v=t.value;
+  if(k==='slot'||k==='horizon')v=+v;
+  if(k==='start'||k==='end'){const s={...db.settings,[k]:v};if(toMin(s.end)<=toMin(s.start)){toast('ساعت پایان باید بعد از شروع باشد.');render();return}}
+  db.settings[k]=v;saveCfg();toast('ذخیره شد.');if(k==='slot'||k==='start'||k==='end')render();
+ }else if(t.dataset.day!==undefined){
+  const v=+t.dataset.day,set=new Set(db.settings.daysOff);t.checked?set.add(v):set.delete(v);db.settings.daysOff=[...set];saveCfg();toast('ذخیره شد.');
+ }else if(t.dataset.svc){
+  const x=db.services.find(s=>s.id===t.dataset.svc),f=t.dataset.f;if(!x)return;
+  if(f==='name'){x.name=t.value.trim()||x.name}else if(f==='min'){x.min=Math.max(5,+en(t.value)||x.min)}else if(f==='vipPrice'){x.vipPrice=Math.max(0,+en(t.value)||0)}else{x.price=Math.max(0,+en(t.value)||0)}
+  saveCfg();toast('ذخیره شد.');
+ }else if(t.id==='imp'&&t.files[0]){
+  const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.settings||!Array.isArray(d.services))throw 0;
+   if(!confirm('تنظیمات و خدمات فعلی با فایل جایگزین شود؟'))return;db.settings=Object.assign(DEF().settings,d.settings);delete db.settings.pin;db.services=d.services;saveCfg();render();toast('بازیابی شد.')}catch(err){toast('فایل پشتیبان معتبر نیست.')}};
+  r.readAsText(t.files[0]);
+ }
+});
+
+/* ---------- start ---------- */
+render();
+initBackend();
+setInterval(()=>{if(isAdminRoute()&&isAuthed()&&A.tab==='cal'&&!$dlg.open&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){const y=scrollY;render();scrollTo(0,y)}},30000);
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
