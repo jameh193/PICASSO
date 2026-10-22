@@ -230,6 +230,13 @@ dialog::backdrop{background:rgba(0,0,0,.78)}
 #toast{background:#1c1c1f;color:var(--gold2);border:1px solid rgba(212,175,55,.45)}
 @media(min-width:381px){.svc{grid-template-columns:1fr 78px 104px 104px 44px}}
 
+.depbox{margin:16px 0 14px;padding:14px 15px;border:1.5px dashed var(--gold);border-radius:16px;background:linear-gradient(135deg,#1d1809,#151517)}
+.depbox h3{margin:0 0 6px;color:var(--gold2);font-size:1.05rem;font-weight:900}
+.depbox p{margin:0 0 8px}
+.cardno{font-size:1.45rem;font-weight:900;letter-spacing:.06em;text-align:center;padding:12px 8px;margin:8px 0;border-radius:13px;background:#0e0e10;border:1px solid rgba(212,175,55,.5);color:var(--gold2);direction:ltr;user-select:all}
+.depbox .cardname{text-align:center;color:var(--steel)}
+.depbox .btn{width:100%}
+.depwarn{margin-top:12px;padding:10px 12px;border-radius:12px;background:#1d1211;border:1px solid #6b2a24;color:#ff9c8d;font-weight:800;text-align:center}
 </style>
 </head>
 <body>
@@ -258,13 +265,23 @@ const $app=document.getElementById('app'),$dlg=document.getElementById('dlg');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),2400)}
 const STATUS={pending:'در انتظار تأیید',confirmed:'تأیید شده',rejected:'رد شده',cancelled:'لغو شده',proposed:'پیشنهاد زمان جدید',declined:'پیشنهاد پذیرفته نشد'};
-const chip=s=>`<span class="chip ${s}">${STATUS[s]}</span>`;
+const chip=s=>`<span class="chip ${s}">${stLbl(s)}</span>`;
 
 /* ---------- data ---------- */
-const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],vipDates:[],phone:'',address:''},
+const DEF=()=>({settings:{start:'10:00',end:'21:00',slot:30,horizon:14,daysOff:[5],closedDates:[],blocks:[],vipDates:[],deposit:0,depositVip:0,cardNumber:'',cardName:'',phone:'',address:''},
  services:[{id:'s1',name:'کوتاهی مو',min:30,price:0},{id:'s2',name:'اصلاح ریش',min:30,price:0},{id:'s3',name:'کوتاهی مو و ریش',min:60,price:0},{id:'s4',name:'اصلاح صورت',min:30,price:0}],
  bookings:[],cells:[]});
 let db=DEF();
+/* ---------- deposit helpers ---------- */
+const depAmt=d=>{const s=db.settings,v=(isVip(d)&&s.depositVip>0)?s.depositVip:(s.deposit||0);return(s.cardNumber&&v>0)?v:0};
+const depOn=()=>!!(db.settings.cardNumber&&(db.settings.deposit>0||db.settings.depositVip>0));
+const stLbl=s=>(s==='pending'&&depOn())?'در انتظار بیعانه':STATUS[s];
+const cardRaw=()=>String(db.settings.cardNumber||'').replace(/\D/g,'');
+const fmtCard=c=>fa(String(c).replace(/\D/g,'').replace(/(\d{4})(?=\d)/g,'$1 '));
+function payBox(date){
+ const a=depAmt(date);if(!a)return '';const s=db.settings;
+ return `<div class="depbox"><h3>پرداخت بیعانه</h3><p>برای ثبت نوبت، مبلغ <b>${price(a)}</b> را کارت‌به‌کارت واریز کنید.</p><div class="cardno" dir="ltr">${fmtCard(s.cardNumber)}</div>${s.cardName?`<p class="cardname">به نام ${esc(s.cardName)}</p>`:''}<button class="btn sm primary" data-act="copycard">کپی شماره کارت</button><div class="depwarn">تا زمانی که بیعانه واریز نشود، نوبت شما ثبت نمی‌شود.</div></div>`;
+}
 /* ---------- VIP helpers ---------- */
 const isVip=d=>Array.isArray(db.settings.vipDates)&&db.settings.vipDates.includes(d);
 const svcPrice=(x,d)=>(isVip(d)&&x&&x.vipPrice>0)?x.vipPrice:((x&&x.price)||0);
@@ -410,9 +427,10 @@ function receiptText(b,kind){
  let t=`ریش و قیچی | آرایشگاه پیکاسو\n${title}\nکد پیگیری: ${fa(codeOf(b))}\nنام: ${b.name}\nخدمت: ${b.sname}\n${k==='proposed'?'زمان پیشنهادی':'زمان'}: ${fFull.format(parse(b.date))}، ساعت ${T(b.time)}`;
  if(k==='proposed'&&b.orig)t+=`\nزمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}`;
  if(bookingVip(b))t+=`\nنوع نوبت: VIP`;if(bookingPrice(b))t+=`\nهزینه: ${price(bookingPrice(b))}`;
- t+=`\nوضعیت: ${STATUS[k]}`;
+ t+=`\nوضعیت: ${stLbl(k)}`;
  if(k==='proposed')t+='\nبرای پذیرش یا رد پیشنهاد، بخش «نوبت‌های من» را ببینید یا با آرایشگاه تماس بگیرید.';
- if(k==='pending'||k==='confirmed')t+=`\nلطفاً حتماً ${fa(5)} دقیقه قبل از زمان نوبت در آرایشگاه حضور داشته باشید.`;
+ if(k==='pending'&&depAmt(b.date)){const cs=db.settings;t+=`\nمبلغ بیعانه: ${price(depAmt(b.date))}\nشماره کارت: ${fa(cardRaw())}${cs.cardName?`\nبه نام: ${cs.cardName}`:''}\nتا واریز بیعانه نوبت شما ثبت نمی‌شود.`}
+if(k==='pending'||k==='confirmed')t+=`\nلطفاً حتماً ${fa(5)} دقیقه قبل از زمان نوبت در آرایشگاه حضور داشته باشید.`;
  if(k==='rejected')t+='\nبرای انتخاب زمان دیگر دوباره رزرو کنید.';
  if(db.settings.phone)t+=`\nتلفن: ${fa(db.settings.phone)}`;
  return t;
@@ -474,16 +492,22 @@ function bookView(){
  <label class="field"><span>نام و نام خانوادگی</span><input id="f-name" autocomplete="name" value="${esc(P.name)}"></label>
  <label class="field"><span>شماره موبایل</span><input id="f-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="۰۹۱۲۳۴۵۶۷۸۹" value="${esc(P.phone||getLP())}"></label>
  <label class="field"><span>توضیحات (اختیاری)</span><textarea id="f-note">${esc(P.note)}</textarea></label>
- <button class="btn primary block" data-act="submit">ارسال درخواست نوبت</button>
- <p class="hint">نوبت بعد از تأیید آرایشگاه قطعی می‌شود.</p></section>`;
+ ${payBox(P.date)}<button class="btn primary block" data-act="submit">ارسال درخواست نوبت</button>
+ <p class="hint">${depAmt(P.date)?'این ساعت موقتاً برای شما نگه داشته می‌شود و بعد از واریز بیعانه و تأیید آرایشگاه، نوبت ثبت نهایی می‌شود.':'نوبت بعد از تأیید آرایشگاه قطعی می‌شود.'}</p></section>`;
  return h;
 }
 
+function proofText(b){return `سلام، بیعانه نوبت ${b.name} (کد پیگیری ${fa(codeOf(b))}) به مبلغ ${price(depAmt(b.date))} واریز شد.`}
+function proofBtns(b){
+ const ph=String(db.settings.phone||'').replace(/\D/g,'');
+ if(!depAmt(b.date)||!/^09\d{9}$/.test(ph))return '';
+ return `<p class="hint">بعد از واریز، رسید را برای آرایشگاه بفرستید:</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px"><button class="btn sm" data-act="proofwa">ارسال رسید در واتس‌اپ</button><button class="btn sm" data-act="proofsms">ارسال رسید با پیامک</button></div>`;
+}
 function doneView(){
  const b=P.done;MSG={text:receiptText(b,'pending'),phone:b.phone};
- return `<section><h2>درخواست شما ثبت شد</h2><div class="rcpt">${esc(MSG.text)}</div>
+ return `<section><h2>${depAmt(b.date)?'درخواست ثبت شد؛ منتظر بیعانه':'درخواست شما ثبت شد'}</h2>${payBox(b.date)}${proofBtns(b)}<div class="rcpt">${esc(MSG.text)}</div>
  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">${navigator.share?`<button class="btn sm primary" data-act="share">اشتراک‌گذاری رسید</button>`:''}<button class="btn sm" data-act="copy">کپی رسید</button></div>
- <p>بعد از تأیید آرایشگاه، وضعیت نوبت در بخش «نوبت‌های من» تأیید شده می‌شود.</p>
+ <p>${depAmt(b.date)?'بعد از واریز بیعانه و بررسی آرایشگاه، وضعیت نوبت در بخش «نوبت‌های من» تأیید شده می‌شود.':'بعد از تأیید آرایشگاه، وضعیت نوبت در بخش «نوبت‌های من» تأیید شده می‌شود.'}</p>
  <div style="display:flex;gap:8px"><button class="btn" data-act="tab" data-tab="mine">نوبت‌های من</button><button class="btn primary" data-act="newbook">نوبت جدید</button></div></section>`;
 }
 
@@ -492,7 +516,7 @@ function mineView(){
  let h=`<section><h2>نوبت‌های من</h2><p class="hint">نوبت‌هایی که با همین دستگاه ثبت کرده‌اید. اگر از دستگاه دیگری رزرو کرده‌اید، با آرایشگاه تماس بگیرید.</p>`;
   h+=`<div style="margin-top:18px">`+(list.length?list.map(b=>{
    const future=(b.date+' '+b.time)>=(today()+' '+fromMin(new Date().getHours()*60+new Date().getMinutes()));
-   return `<div class="item"><div class="hd"><b>${esc(b.sname)} ${vipChip(b)}</b>${chip(b.status)}</div><p>${b.status==='proposed'?'زمان پیشنهادی: ':''}${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.status==='proposed'&&b.orig?`<p>زمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}${priceP(b)}<div class="acts">${b.status==='proposed'?`<button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">پذیرفتن زمان جدید</button><button class="btn sm danger" data-act="declineprop" data-id="${b.id}">نمی‌پذیرم</button>`:(active(b)&&future?`<button class="btn sm danger" data-act="mycancel" data-id="${b.id}">لغو نوبت</button>`:'')}<button class="btn sm" data-act="receipt" data-id="${b.id}">رسید</button></div></div>`}).join(''):`<p class="empty">نوبتی با این شماره پیدا نشد.</p>`)+`</div>`;
+   return `<div class="item"><div class="hd"><b>${esc(b.sname)} ${vipChip(b)}</b>${chip(b.status)}</div><p>${b.status==='proposed'?'زمان پیشنهادی: ':''}${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.status==='proposed'&&b.orig?`<p>زمان درخواستی شما: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}${priceP(b)}${b.status==='pending'?payBox(b.date):''}<div class="acts">${b.status==='proposed'?`<button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">پذیرفتن زمان جدید</button><button class="btn sm danger" data-act="declineprop" data-id="${b.id}">نمی‌پذیرم</button>`:(active(b)&&future?`<button class="btn sm danger" data-act="mycancel" data-id="${b.id}">لغو نوبت</button>`:'')}<button class="btn sm" data-act="receipt" data-id="${b.id}">رسید</button></div></div>`}).join(''):`<p class="empty">نوبتی با این شماره پیدا نشد.</p>`)+`</div>`;
  return h+`</section>`;
 }
 
@@ -536,7 +560,8 @@ function reqView(){
  let h=`<h2>درخواست‌های جدید</h2>`;
  h+=list.length?list.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)} ${vipChip(b)}</b><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a></div>
   <p>${esc(b.sname)}${bookingPrice(b)?' · '+price(bookingPrice(b)):''}</p><p>${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.note?`<p>توضیحات: ${esc(b.note)}</p>`:''}
-  <div class="acts"><button class="btn sm ok" data-act="approve" data-id="${b.id}">تأیید</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button><button class="btn sm" data-act="goday" data-d="${b.date}">دیدن در تقویم</button></div></div>`).join(''):`<p class="empty">درخواست جدیدی نیست.</p>`;
+  ${depAmt(b.date)?`<p>منتظر واریز بیعانه ${price(depAmt(b.date))}؛ بعد از بررسی واریز، تأیید کنید.</p>`:''}
+  <div class="acts"><button class="btn sm ok" data-act="approve" data-id="${b.id}">${depOn()?'بیعانه دریافت شد؛ تأیید':'تأیید'}</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button><button class="btn sm" data-act="goday" data-d="${b.date}">دیدن در تقویم</button></div></div>`).join(''):`<p class="empty">درخواست جدیدی نیست.</p>`;
  const prop=db.bookings.filter(b=>b.status==='proposed').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
  if(prop.length)h+=`<h2 style="margin-top:30px">منتظر پاسخ مشتری</h2>`+prop.map(b=>`<div class="item"><div class="hd"><b>${esc(b.name)}</b>${chip('proposed')}</div><p>زمان پیشنهادی: ${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>${b.orig?`<p>زمان درخواستی: ${fFull.format(parse(b.orig.date))}، ساعت ${T(b.orig.time)}</p>`:''}
   <div class="acts"><button class="btn sm ok" data-act="acceptprop" data-id="${b.id}">مشتری پذیرفت</button><button class="btn sm" data-act="notify" data-id="${b.id}">پیام به مشتری</button><button class="btn sm danger" data-act="admcancel" data-id="${b.id}">لغو پیشنهاد</button></div></div>`).join('');
@@ -582,6 +607,10 @@ function setView(){
  <span style="font-weight:600;display:block;margin-bottom:6px">تعطیلی هفتگی</span><div class="days7">${dn.map(([n,v])=>`<label><input type="checkbox" data-day="${v}" ${s.daysOff.includes(v)?'checked':''}>${n}</label>`).join('')}</div></div>
  <div class="setgrp"><h2>خدمات</h2><p class="hint">قیمت‌ها به تومان. اگر «قیمت VIP» خالی باشد، در روز VIP همان قیمت عادی اعمال می‌شود.</p>${db.services.map(x=>`<div class="svc"><input class="nm" data-svc="${x.id}" data-f="name" value="${esc(x.name)}" aria-label="نام خدمت"><input data-svc="${x.id}" data-f="min" type="number" inputmode="numeric" min="5" step="5" value="${x.min}" aria-label="مدت (دقیقه)"><input data-svc="${x.id}" data-f="price" type="number" inputmode="numeric" min="0" value="${x.price||''}" placeholder="قیمت عادی" aria-label="قیمت عادی به تومان"><input data-svc="${x.id}" data-f="vipPrice" type="number" inputmode="numeric" min="0" value="${x.vipPrice||''}" placeholder="قیمت VIP" aria-label="قیمت VIP به تومان"><button class="x" data-act="delsvc" data-id="${x.id}" aria-label="حذف خدمت">حذف</button></div>`).join('')}
  <button class="btn block" data-act="addsvc">افزودن خدمت</button></div>
+ <div class="setgrp"><h2>بیعانه</h2><p class="hint">اگر مبلغ بیعانه و شماره کارت پر باشد، مشتری بعد از انتخاب زمان، شماره کارت را می‌بیند و باید بیعانه بزند. اگر خالی باشد، مرحله بیعانه نشان داده نمی‌شود.</p>
+ <div class="two"><label class="field"><span>مبلغ بیعانه (تومان)</span><input type="number" inputmode="numeric" min="0" data-set="deposit" value="${s.deposit||''}"></label><label class="field"><span>بیعانه روز VIP (اختیاری)</span><input type="number" inputmode="numeric" min="0" data-set="depositVip" value="${s.depositVip||''}"></label></div>
+ <label class="field"><span>شماره کارت (۱۶ رقم)</span><input type="tel" inputmode="numeric" dir="ltr" maxlength="19" data-set="cardNumber" value="${esc(s.cardNumber||'')}" placeholder="6037 0000 0000 0000"></label>
+ <label class="field"><span>نام صاحب کارت</span><input data-set="cardName" value="${esc(s.cardName||'')}"></label></div>
  ${vipSection()}
  <div class="setgrp"><h2>اطلاعات تماس (نمایش در صفحه مشتری)</h2>
  <label class="field"><span>تلفن</span><input type="tel" data-set="phone" value="${esc(s.phone)}"></label>
@@ -600,7 +629,7 @@ function showBooking(id){
  const b=db.bookings.find(x=>x.id===id);if(!b)return;
  openDlg(`<h3>${esc(b.name)}</h3><p style="margin:0">${esc(b.sname)}${bookingPrice(b)?' · '+price(bookingPrice(b)):''} ${vipChip(b)}</p><p style="margin:0">${fFull.format(parse(b.date))}، ساعت ${T(b.time)}</p>
  <p style="margin:6px 0"><a href="tel:${esc(b.phone)}">${esc(fa(b.phone))}</a> ${chip(b.status)}</p>${b.note?`<p style="margin:0">توضیحات: ${esc(b.note)}</p>`:''}
- <div class="acts">${b.status==='pending'?`<button class="btn sm ok" data-act="approve" data-id="${b.id}">تأیید</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button>`:`<button class="btn sm danger" data-act="admcancel" data-id="${b.id}">${b.status==='proposed'?'لغو پیشنهاد':'لغو نوبت'}</button><button class="btn sm" data-act="notify" data-id="${b.id}">پیام به مشتری</button>`}<button class="btn sm" data-act="closedlg">بستن</button></div>`);
+ <div class="acts">${b.status==='pending'?`<button class="btn sm ok" data-act="approve" data-id="${b.id}">${depOn()?'بیعانه دریافت شد؛ تأیید':'تأیید'}</button><button class="btn sm danger" data-act="reject" data-id="${b.id}">رد</button>`:`<button class="btn sm danger" data-act="admcancel" data-id="${b.id}">${b.status==='proposed'?'لغو پیشنهاد':'لغو نوبت'}</button><button class="btn sm" data-act="notify" data-id="${b.id}">پیام به مشتری</button>`}<button class="btn sm" data-act="closedlg">بستن</button></div>`);
 }
 function showAdd(t){
  openDlg(`<h3>افزودن نوبت ساعت ${T(t)}</h3><p class="hint" style="margin-top:0">برای مشتری حضوری یا تلفنی. نوبت بلافاصله تأیید می‌شود.</p>
@@ -668,6 +697,9 @@ document.addEventListener('click',e=>{
    saveCfg();render()}break;
   case'togglevip':{const v=db.settings.vipDates,i=v.indexOf(A.date);if(i>=0)v.splice(i,1);else v.push(A.date);saveCfg();render();toast(i>=0?'VIP این روز برداشته شد.':'این روز VIP شد.')}break;
   case'unvip':{db.settings.vipDates=db.settings.vipDates.filter(x=>x!==el.dataset.d);saveCfg();render();toast('VIP برداشته شد.')}break;
+  case'copycard':copyText(cardRaw());break;
+  case'proofwa':{const ph=String(db.settings.phone).replace(/\D/g,'');window.open(`https://wa.me/98${ph.replace(/^0/,'')}?text=${encodeURIComponent(proofText(P.done))}`,'_blank')}break;
+  case'proofsms':{const ph=String(db.settings.phone).replace(/\D/g,'');location.href=`sms:${ph}?&body=${encodeURIComponent(proofText(P.done))}`}break;
   case'bk':showBooking(id);break;
   case'addslot':showAdd(+el.dataset.t);break;
   case'closedlg':closeDlg();break;
@@ -748,6 +780,8 @@ document.addEventListener('change',e=>{
  if(t.dataset.set){
   const k=t.dataset.set;let v=t.value;
   if(k==='slot'||k==='horizon')v=+v;
+  else if(k==='deposit'||k==='depositVip')v=Math.max(0,+en(v)||0);
+  else if(k==='cardNumber'){v=en(v).replace(/\D/g,'');if(v&&v.length!==16){toast('شماره کارت باید ۱۶ رقم باشد.');return}}
   if(k==='start'||k==='end'){const s={...db.settings,[k]:v};if(toMin(s.end)<=toMin(s.start)){toast('ساعت پایان باید بعد از شروع باشد.');render();return}}
   db.settings[k]=v;saveCfg();toast('ذخیره شد.');if(k==='slot'||k==='start'||k==='end')render();
  }else if(t.dataset.day!==undefined){

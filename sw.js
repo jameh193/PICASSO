@@ -1,4 +1,4 @@
-const CACHE='rish-o-ghaichi-v6';
+const CACHE='rish-o-ghaichi-v7';
 const SHELL=['./','index.html','manifest.json','icon-192.png','icon-512.png','supabase-config.js'];
 const HOSTS=['fonts.googleapis.com','fonts.gstatic.com','cdn.jsdelivr.net','esm.sh'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
